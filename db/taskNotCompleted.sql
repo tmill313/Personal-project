@@ -1,3 +1,5 @@
 UPDATE "public"."suggestions" SET "completed"=FALSE WHERE 
 "suggestion_id"= $1;
-select * from suggestions where assigned_id = $2;
+UPDATE "public"."teams" SET "completed_votes"= completed_votes - $3 WHERE "id"=$2;
+select * from suggestions where assigned_id = $2
+order by completed;

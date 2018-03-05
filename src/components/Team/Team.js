@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {connect} from 'react-redux'
 import {getTeam, getTeamSuggestions} from '../ducks/reducer';
+import './Team.css'
 
 class Team extends Component {
 constructor() {
@@ -22,13 +23,13 @@ componentDidMount() {
     })
 }
 
-taskCompleted(id, assigned_id) {
-    axios.put(`/taskCompleted/${id}/${assigned_id}`).then(res => {
+taskCompleted(id, assigned_id, votes) {
+    axios.put(`/taskCompleted/${id}/${assigned_id}/${votes}`).then(res => {
         this.props.getTeamSuggestions(res.data)
     })
 }
-taskNotCompleted(id, assigned_id) {
-    axios.put(`/taskNotCompleted/${id}/${assigned_id}`).then(res => {
+taskNotCompleted(id, assigned_id, votes) {
+    axios.put(`/taskNotCompleted/${id}/${assigned_id}/${votes}`).then(res => {
         this.props.getTeamSuggestions(res.data)
     })
 }
@@ -37,16 +38,16 @@ render() {
     let thisTeamSuggestions = this.props.teamSuggestions.map(obj => (
         <div>
             <h1>{obj.suggestion}</h1>
-            <h1>{obj.votes}</h1>
+            <h1>votes: {obj.votes}</h1>
             {!obj.completed ?
-            <div>
+            <div className="task_not_completed_div">
                 <h1>Is currently being worked on</h1>
-                <button onClick={() => this.taskCompleted(obj.suggestion_id, obj.assigned_id)}>mark as completed</button>
+                <button onClick={() => this.taskCompleted(obj.suggestion_id, obj.assigned_id, obj.votes) }>mark as completed</button>
             </div>
             :
-            <div>
+            <div className="task_completed_div">
                 <h1>Is completed</h1>
-                <button onClick={() => this.taskNotCompleted(obj.suggestion_id, obj.assigned_id)}>mark as NOT completed</button>
+                <button onClick={() => this.taskNotCompleted(obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as NOT completed</button>
             </div>
             }
         </div>
@@ -54,13 +55,14 @@ render() {
     let teamName = this.props.team.map(obj => (
         <div>
             <h1>{obj.team_name}</h1>
+            <h1>Completed votes: {obj.completed_votes}</h1>
         </div>
     ))
     return(
         <div>
+            <Link to='/dashboard'><button>Back to Dashboard</button></Link>
             {teamName}
             {thisTeamSuggestions}
-            <Link to='/dashboard'><button>Back to Dashboard</button></Link>
         </div>
     )
 }

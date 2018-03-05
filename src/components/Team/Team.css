@@ -1,0 +1,6 @@
+.task_completed_div {
+    background: gray;
+}
+.task_not_completed_div {
+    background: dodgerblue;
+}

@@ -44,13 +44,19 @@ module.exports = {
         const db= req.app.get('db');
 
         const{params} = req;
-        db.taskCompleted([params.id, params.assigned_id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+        db.taskCompleted([params.id, params.assigned_id, params.votes]).then(teamSuggestions => res.status(200).send(teamSuggestions))
     },
     taskNotCompleted: (req, res) => {
         const db= req.app.get('db');
 
         const{params} = req;
-        db.taskNotCompleted([params.id, params.assigned_id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+        db.taskNotCompleted([params.id, params.assigned_id, params.votes]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+    },
+    commitSuggestion: (req, res) => {
+        const db= req.app.get('db');
+
+        const{params} = req;
+        db.commitSuggestion([params.id, params.suggestion_id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
     }
 
 

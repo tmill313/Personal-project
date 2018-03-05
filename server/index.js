@@ -88,8 +88,9 @@ app.put('/like', ctrl.addLike)
 app.post('/addSuggestion', ctrl.addSuggestion)
 app.get('/getTeam/:id', ctrl.getTeam)
 app.get('/getTeamSuggestions/:id', ctrl.getTeamSuggestions)
-app.put('/taskCompleted/:id/:assigned_id', ctrl.taskCompleted)
-app.put('/taskNotCompleted/:id/:assigned_id', ctrl.taskNotCompleted)
+app.put('/taskCompleted/:id/:assigned_id/:votes', ctrl.taskCompleted)
+app.put('/taskNotCompleted/:id/:assigned_id/:votes', ctrl.taskNotCompleted)
+app.put('/commitSuggestion/:id/:suggestion_id', ctrl.commitSuggestion)
 
 
 

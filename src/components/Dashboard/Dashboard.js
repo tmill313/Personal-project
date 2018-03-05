@@ -44,6 +44,12 @@ class Dashboard extends Component {
         })
     }
 
+    commitSuggestion(id, suggestion_id) {
+        axios.put(`/commitSuggestion/${id}/${suggestion_id}`).then(res => {
+            this.props.getSuggestions(res.data)
+        })
+    }
+
 render() {
     let teamsBox = this.props.teams.sort((a, b) => b.completed_votes - a.completed_votes).map((obj) => (
         <div>
@@ -58,7 +64,7 @@ render() {
             <p># of points: {this.props.user ? obj.votes : null}</p>
             <button onClick={() => this.deleteSuggestion(obj.suggestion_id)}>delete</button>
             <button onClick={() => this.addLike(obj.suggestion_id, obj.votes, 1)}>Like</button>
-            <button>commit suggestion to team</button>
+            <button onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
         </div>
     ))
     return(
