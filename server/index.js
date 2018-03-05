@@ -19,10 +19,12 @@ const {
 } = process.env
 
 
-massive(CONNECTION_STRING).then(db => {app.set('db', db);})
+
 
 const app = express();
 app.use(bodyParser.json())
+
+massive(CONNECTION_STRING).then(db => {app.set('db', db);})
 
 app.use(session({
     secret: SESSION_SECRET,
