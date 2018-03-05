@@ -8,7 +8,7 @@ module.exports = {
     getTeams: (req, res) => {
         const db = req.app.get('db');
 
-        db.getTeams(). then(teams => res.status(200).send(teams))
+        db.getTeams().then(teams => res.status(200).send(teams))
     },
     getSuggestions: (req, res) => {
         const db = req.app.get('db');
@@ -27,6 +27,30 @@ module.exports = {
         const newVotes = req.body.votes += req.body.incrementer;
         const {suggestion_id} = req.body;
         db.addLike(newVotes, suggestion_id).then(suggestions => res.status(200).send(suggestions))
+    },
+    getTeam: (req, res) => {
+        const db = req.app.get('db');
+
+        const{params} = req;
+        db.getTeam([params.id]).then(team => res.status(200).send(team))
+    },
+    getTeamSuggestions: (req, res) => {
+        const db = req.app.get('db');
+
+        const{params} = req;
+        db.getTeamSuggestions([params.id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+    },
+    taskCompleted: (req, res) => {
+        const db= req.app.get('db');
+
+        const{params} = req;
+        db.taskCompleted([params.id, params.assigned_id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+    },
+    taskNotCompleted: (req, res) => {
+        const db= req.app.get('db');
+
+        const{params} = req;
+        db.taskNotCompleted([params.id, params.assigned_id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
     }
 
 

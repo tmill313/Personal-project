@@ -49,6 +49,7 @@ render() {
         <div>
             <h1>{this.props.user ? obj.team_name : null}</h1>
             <h3>{this.props.user ? obj.completed_votes : null}</h3>
+            <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link>
         </div>
     ))
     let suggBox = this.props.suggestions.sort((a, b) => b.votes - a.votes).map((obj) => (

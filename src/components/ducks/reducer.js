@@ -2,13 +2,17 @@ let initialState = {
     suggestions: [],
     newSuggestion: '',
     teams:[],
-    user: {}
+    user: {},
+    team: [],
+    teamSuggestions: []
 }
 
 const TYPING_NEW_SUGGESTION = "TYPING_NEW_SUGGESTION"
 const GET_TEAMS = "GET_TEAMS"
 const GET_USER = "GET_USER"
 const GET_SUGGESTIONS = "GET_SUGGESTIONS"
+const GET_TEAM = "GET_TEAM"
+const GET_TEAM_SUGGESTIONS = "GET_TEAM_SUGGESTIONS"
 
 
 
@@ -26,6 +30,10 @@ function reducer(state=initialState, action) {
         return Object.assign({}, state, {user: action.payload})
         case GET_SUGGESTIONS:
         return Object.assign({}, state, {suggestions: action.payload})
+        case GET_TEAM:
+        return Object.assign({}, state, {team: action.payload})
+        case GET_TEAM_SUGGESTIONS:
+        return Object.assign({}, state, {teamSuggestions: action.payload})
 
 
         default: return state;
@@ -51,6 +59,16 @@ export function getUser(u) {
 }
 export function getSuggestions(s) {
     return {type: GET_SUGGESTIONS,
+    payload: s
+    }
+}
+export function getTeam(t) {
+    return {type: GET_TEAM,
+    payload: t
+    }
+}
+export function getTeamSuggestions(s) {
+    return {type: GET_TEAM_SUGGESTIONS,
     payload: s
     }
 }

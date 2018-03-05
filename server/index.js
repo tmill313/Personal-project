@@ -86,6 +86,10 @@ app.get('/getSuggestions', ctrl.getSuggestions)
 app.delete('/delete/:id', ctrl.deleteSuggestion)
 app.put('/like', ctrl.addLike)
 app.post('/addSuggestion', ctrl.addSuggestion)
+app.get('/getTeam/:id', ctrl.getTeam)
+app.get('/getTeamSuggestions/:id', ctrl.getTeamSuggestions)
+app.put('/taskCompleted/:id/:assigned_id', ctrl.taskCompleted)
+app.put('/taskNotCompleted/:id/:assigned_id', ctrl.taskNotCompleted)
 
 
 
