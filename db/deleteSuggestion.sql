@@ -1,2 +1,2 @@
-delete from suggestions where suggid = $1;
+delete from suggestions where suggestion_id = $1;
 select * from suggestions;

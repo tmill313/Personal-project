@@ -2,8 +2,8 @@ module.exports = {
     addSuggestion: (req, res) => {
         const db = req.app.get('db');
         const suggid = {suggid: 5};
-        const{suggestion, date, userid, votes, assignedid, completed} = req.body;
-        db.addSuggestion(suggestion, date, userid, votes, assignedid, completed).then(() => res.status(200).send());
+        const{suggestion, date, user_id, votes, assigned_id, completed} = req.body;
+        db.addSuggestion(suggestion, date, user_id, votes, assigned_id, completed).then(() => res.status(200).send());
     },
     getTeams: (req, res) => {
         const db = req.app.get('db');
@@ -25,8 +25,8 @@ module.exports = {
         const db = req.app.get('db');
 
         const newVotes = req.body.votes += req.body.incrementer;
-        const {suggid} = req.body;
-        db.addLike(newVotes, suggid).then(suggestions => res.status(200).send(suggestions))
+        const {suggestion_id} = req.body;
+        db.addLike(newVotes, suggestion_id).then(suggestions => res.status(200).send(suggestions))
     }
 
 

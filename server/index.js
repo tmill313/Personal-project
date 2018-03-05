@@ -44,7 +44,7 @@ passport.use(new Auth0Strategy({
     const db = app.get('db')
     db.find_user([profile.id]).then(users => {
        if(!users[0]) {
-           db.create_user([profile.displayName, '1', 'manager', profile.picture, profile.id]).then(userCreated => {
+           db.create_user([profile.name.givenName, profile.name.familyName, 1, 'manager',  profile.id]).then(userCreated => {
                 done(null, userCreated[0].user_id)
            })
        } else {

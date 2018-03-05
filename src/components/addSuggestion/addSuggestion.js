@@ -18,7 +18,7 @@ typingSuggestion(e) {
 }
 
 createSuggestion() {
-    let body = {suggestion: this.state.newSuggestion, date: '12/12/12', userid: 'tm10', votes: 0, assignedid: 'none', completes: 'no'};
+    let body = {suggestion: this.state.newSuggestion, date: '12/12/12', user_id: 1, votes: 0, completed: 'no'};
     axios.post('/addSuggestion', body).then(res => {
 
     })
