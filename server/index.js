@@ -46,7 +46,7 @@ passport.use(new Auth0Strategy({
     const db = app.get('db')
     db.find_user([profile.id]).then(users => {
        if(!users[0]) {
-           db.create_user([profile.name.givenName, profile.name.familyName, 1, 'manager',  profile.id]).then(userCreated => {
+           db.create_user([profile.name.givenName, profile.name.familyName, profile.id]).then(userCreated => {
                 done(null, userCreated[0].user_id)
            })
        } else {
@@ -67,7 +67,7 @@ passport.deserializeUser( (id, done) => {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/dashboard',
+    successRedirect: 'http://localhost:3000/#/assignrole',
     failureRedirect: 'http://localhost:3000'
 }))
 app.get('/auth/me', (req, res) => {
@@ -91,6 +91,8 @@ app.get('/getTeamSuggestions/:id', ctrl.getTeamSuggestions)
 app.put('/taskCompleted/:id/:assigned_id/:votes', ctrl.taskCompleted)
 app.put('/taskNotCompleted/:id/:assigned_id/:votes', ctrl.taskNotCompleted)
 app.put('/commitSuggestion/:id/:suggestion_id', ctrl.commitSuggestion)
+app.get('/getRole', ctrl.getRole)
+app.put('/setUser/:teamId/:position/:access', ctrl.setUser)
 
 
 

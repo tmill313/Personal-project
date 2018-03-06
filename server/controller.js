@@ -57,6 +57,17 @@ module.exports = {
 
         const{params} = req;
         db.commitSuggestion([params.id, params.suggestion_id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+    },
+    getRole: (req, res) => {
+        const db = req.app.get('db');
+
+        db.getUser([req.user.user_id]).then(user => res.status(200).send(user))
+    },
+    setUser: (req, res) => {
+        const db = req.app.get('db');
+
+        const{params} = req;
+        db.setUser([req.user.user_id, params.teamId, params.position, params.access]).then(() => res.status(200).send())
     }
 
 

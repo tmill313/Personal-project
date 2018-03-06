@@ -1,1 +1,2 @@
-select * from teams;
+select * from teams
+where id != 1;

@@ -1,0 +1,1 @@
+UPDATE "public"."users" SET "team_id"=$2, "position"=$3, "access"=$4 WHERE "user_id"=$1;

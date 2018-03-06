@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class Login extends Component {
 
@@ -14,7 +14,7 @@ export default class Login extends Component {
         return (
             <div>
                 <h1>Login landing page</h1>
-                <a href={ process.env.REACT_APP_LOGIN }><button>Login</button></a>
+                <a href={process.env.REACT_APP_LOGIN}><button>Login</button></a>
             </div>
         )
     }
