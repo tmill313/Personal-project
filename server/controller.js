@@ -28,6 +28,13 @@ module.exports = {
         const {suggestion_id} = req.body;
         db.addLike(newVotes, suggestion_id).then(suggestions => res.status(200).send(suggestions))
     },
+    removeLike: (req, res) => {
+        const db = req.app.get('db');
+
+        const newVotes = req.body.votes -= req.body.incrementer;
+        const {suggestion_id} = req.body;
+        db.addLike(newVotes, suggestion_id).then(suggestions => res.status(200).send(suggestions))
+    },
     getTeam: (req, res) => {
         const db = req.app.get('db');
 
@@ -68,6 +75,21 @@ module.exports = {
 
         const{params} = req;
         db.setUser([req.user.user_id, params.teamId, params.position, params.access]).then(() => res.status(200).send())
+    },
+    pushLike: (req, res) => {
+        const db = req.app.get('db');
+        let newArr = [...req.user.voted]
+        const{params} = req;
+        newArr.push(params.id)
+        db.pushLike([newArr, req.user.user_id]).then(user => res.status(200).send(user))
+    },
+    spliceLike: (req, res) => {
+        const db = req.app.get('db');
+        let newArr = [...req.user.voted]
+        const{params} = req;
+        let index = newArr.indexOf(params.id)
+        newArr.splice(index, 1)
+        db.pushLike([newArr, req.user.user_id]).then(user => res.status(200).send(user))
     }
 
 

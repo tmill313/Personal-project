@@ -36,6 +36,7 @@ class Team extends Component {
 
     render() {
         let thisTeamSuggestions = this.props.teamSuggestions.map(obj => (
+            this.props.user.access === 2 || this.props.user.access === 3 ?
             <div>
                 {!obj.completed ?
                     <div className="task_not_completed_div">
@@ -53,6 +54,22 @@ class Team extends Component {
                     </div>
                 }
             </div>
+            :
+            <div>
+            {!obj.completed ?
+                <div className="task_not_completed_div">
+                    <h1>{obj.suggestion}</h1>
+                    <h1>votes: {obj.votes}</h1>
+                    <h1>Is currently being worked on</h1>
+                </div>
+                :
+                <div className="task_completed_div">
+                    <h1>{obj.suggestion}</h1>
+                    <h1>votes: {obj.votes}</h1>
+                    <h1>Is completed</h1>
+                </div>
+            }
+        </div>
         ))
         let teamName = this.props.team.map(obj => (
             <div>
@@ -77,7 +94,8 @@ class Team extends Component {
 function mapStateToProps(state) {
     return {
         team: state.team,
-        teamSuggestions: state.teamSuggestions
+        teamSuggestions: state.teamSuggestions,
+        user: state.user
     }
 }
 

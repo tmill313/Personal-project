@@ -46,7 +46,7 @@ passport.use(new Auth0Strategy({
     const db = app.get('db')
     db.find_user([profile.id]).then(users => {
        if(!users[0]) {
-           db.create_user([profile.name.givenName, profile.name.familyName, profile.id]).then(userCreated => {
+           db.create_user([profile.name.givenName, profile.name.familyName, profile.id, [0]]).then(userCreated => {
                 done(null, userCreated[0].user_id)
            })
        } else {
@@ -85,6 +85,7 @@ app.get('/getTeams', ctrl.getTeams)
 app.get('/getSuggestions', ctrl.getSuggestions)
 app.delete('/delete/:id', ctrl.deleteSuggestion)
 app.put('/like', ctrl.addLike)
+app.put('/removeLike', ctrl.removeLike)
 app.post('/addSuggestion', ctrl.addSuggestion)
 app.get('/getTeam/:id', ctrl.getTeam)
 app.get('/getTeamSuggestions/:id', ctrl.getTeamSuggestions)
@@ -93,6 +94,8 @@ app.put('/taskNotCompleted/:id/:assigned_id/:votes', ctrl.taskNotCompleted)
 app.put('/commitSuggestion/:id/:suggestion_id', ctrl.commitSuggestion)
 app.get('/getRole', ctrl.getRole)
 app.put('/setUser/:teamId/:position/:access', ctrl.setUser)
+app.put('/pushLike/:id', ctrl.pushLike)
+app.put('/spliceLike/:id', ctrl.spliceLike)
 
 
 

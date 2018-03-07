@@ -2,7 +2,9 @@ let initialState = {
     suggestions: [],
     newSuggestion: '',
     teams:[],
-    user: {},
+    user: {
+        voted: []
+    },
     team: [],
     teamSuggestions: []
 }
