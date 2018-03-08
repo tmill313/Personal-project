@@ -23,7 +23,6 @@ class Dashboard extends Component {
 
     componentDidMount() {
         axios.get('/getTeams').then(res => {
-            console.log(res.data)
             this.props.getTeams(res.data)
         })
         axios.get('/auth/me').then(res => {
@@ -35,13 +34,13 @@ class Dashboard extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
-        if(newProps.suggestions.length > 0) {
+        if(newProps.suggestions.length) {
         let suggestions = newProps.suggestions.map(obj => {
             obj.voted = newProps.user.voted.some(e => e === obj.suggestion_id)}) 
         this.setState({
             suggestions
-        })}
+        })
+    }
     }
 
     deleteSuggestion(id) {
@@ -54,7 +53,7 @@ class Dashboard extends Component {
     let body = { liked: liked, suggestion_id: id, votes: initialVal, incrementer: incrementer }
     axios.put('/like', body).then(res => {
     this.props.getSuggestions(res.data.suggestions)
-    this.props.getUser(res.data.users)})
+    this.props.getUser(res.data.user)})
     }
 
     commitSuggestion(id, suggestion_id) {

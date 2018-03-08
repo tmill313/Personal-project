@@ -19,7 +19,6 @@ export default class AssignRole extends Component {
 
     componentWillMount() {
         axios.get('/getRole').then(res => {
-            console.log(res.data)
             if (res.data[0].access) {
                 this.setState({
                     accessAssigned: true
@@ -47,21 +46,20 @@ export default class AssignRole extends Component {
             position: 'Executive',
             access: 3
         })
-        console.log(this.state.position)
-        console.log(this.state.access)
+
     }
     handleChange(e) {
         this.setState({
             teamID: e
         })
-        console.log(this.state.teamID)
+
     }
     setUser() {
         axios.put(`/setUser/${this.state.teamID}/${this.state.position}/${this.state.access}`).then(res => {
             this.setState({
                 toggle: true
             })
-            console.log(this.state.toggle)
+
         })
     }
 
@@ -69,7 +67,7 @@ export default class AssignRole extends Component {
         this.setState({
             access: value
         })
-        console.log(this.state.access)
+
     }
 
     render() {

@@ -13,18 +13,17 @@ class Team extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.match.params.id)
         axios.get(`/getTeam/${this.props.match.params.id}`).then(res => {
-            console.log(res.data)
             this.props.getTeam(res.data)
         })
         axios.get(`/getTeamSuggestions/${this.props.match.params.id}`).then(res => {
-            this.props.getTeamSuggestions(res.data)
+            this.props.getTeamSuggestions(res.data.teamSuggestions)
         })
     }
     completion(completed_votes, completed, id, assigned_id, votes) {
         axios.put(`/completion/${id}/${assigned_id}/${votes}/${!completed}/${completed_votes}`).then(res => {
-            this.props.getTeamSuggestions(res.data)
+            this.props.getTeamSuggestions(res.data.teamSuggestions)
+            this.props.getTeam(res.data.team)
         })
     }
 
@@ -37,14 +36,14 @@ class Team extends Component {
                         <h1>{obj.suggestion}</h1>
                         <h1>votes: {obj.votes}</h1>
                         <h1>Is currently being worked on</h1>
-                        <button onClick={() => this.completion(obj.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as completed</button>
+                        <button onClick={() => this.completion(this.props.team.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as completed</button>
                     </div>
                     :
                     <div className="task_completed_div">
                         <h1>{obj.suggestion}</h1>
                         <h1>votes: {obj.votes}</h1>
                         <h1>Is completed</h1>
-                        <button onClick={() => this.completion(obj.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as NOT completed</button>
+                        <button onClick={() => this.completion(this.props.team.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as NOT completed</button>
                     </div>
                 }
             </div>
@@ -65,12 +64,12 @@ class Team extends Component {
             }
         </div>
         ))
-        let teamName = this.props.team.map(obj => (
+        let teamName = 
             <div>
-                <h1>{obj.team_name}</h1>
-                <h1>Completed votes: {obj.completed_votes}</h1>
+                <h1>{this.props.team.team_name}</h1>
+                <h1>Completed votes: {this.props.team.completed_votes}</h1>
             </div>
-        ))
+    
         return (
             <div>
                 <Link to='/dashboard'><button>Back to Dashboard</button></Link>

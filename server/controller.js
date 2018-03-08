@@ -26,7 +26,6 @@ module.exports = {
         let newVotes = 0;
         let newArr = [...req.user.voted];
         let index = newArr.indexOf(req.body.suggestion_id)
-        console.log(req.body)
         if(req.body.liked) {
             newVotes = req.body.votes -= req.body.incrementer;
             newArr.splice(index, 1);
@@ -36,7 +35,7 @@ module.exports = {
         }
         db.pushLike([newArr, req.user.user_id]).then(users => {
             db.addLike([newVotes, req.body.suggestion_id]).then(suggestions => {
-                let data = {users, suggestions}
+                let data = {user:users[0], suggestions}
                 res.status(200).send(data)
             })
         })
@@ -45,16 +44,20 @@ module.exports = {
         const db = req.app.get('db');
 
         const{params} = req;
-        db.getTeam([params.id]).then(team => res.status(200).send(team))
+        db.getTeam([params.id]).then(team => res.status(200).send(team[0]))
     },
     getTeamSuggestions: (req, res) => {
         const db = req.app.get('db');
 
         const{params} = req;
-        db.getTeamSuggestions([params.id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+        db.getTeamSuggestions([params.id]).then(teamSuggestions => {
+            db.getTeam([params.id]).then(teams => {
+                let data = {team: teams[0], teamSuggestions}
+                res.status(200).send(data)
+            })
+        })
     },
     completion: (req, res) => {
-        console.log(req.params)
         const db = req.app.get('db');
         let completedVotes = parseInt(req.params.completed_votes);
         let theseVotes = parseInt(req.params.votes);
@@ -64,8 +67,12 @@ module.exports = {
         } else {
             newVotes = completedVotes -= theseVotes;
         }
-        console.log(newVotes)
-        db.completion([req.params.id, req.params.assigned_id, newVotes, req.params.completed]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+        db.completion([req.params.id, req.params.assigned_id, newVotes, req.params.completed]).then(teamSuggestions => {
+            db.getTeam([req.params.assigned_id]).then(teams => {
+                let data = {team: teams[0], teamSuggestions}
+                res.status(200).send(data)
+            })
+        })
     },
     commitSuggestion: (req, res) => {
         const db= req.app.get('db');
