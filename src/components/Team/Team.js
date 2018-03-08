@@ -22,14 +22,8 @@ class Team extends Component {
             this.props.getTeamSuggestions(res.data)
         })
     }
-
-    taskCompleted(id, assigned_id, votes) {
-        axios.put(`/taskCompleted/${id}/${assigned_id}/${votes}`).then(res => {
-            this.props.getTeamSuggestions(res.data)
-        })
-    }
-    taskNotCompleted(id, assigned_id, votes) {
-        axios.put(`/taskNotCompleted/${id}/${assigned_id}/${votes}`).then(res => {
+    completion(completed_votes, completed, id, assigned_id, votes) {
+        axios.put(`/completion/${id}/${assigned_id}/${votes}/${!completed}/${completed_votes}`).then(res => {
             this.props.getTeamSuggestions(res.data)
         })
     }
@@ -43,14 +37,14 @@ class Team extends Component {
                         <h1>{obj.suggestion}</h1>
                         <h1>votes: {obj.votes}</h1>
                         <h1>Is currently being worked on</h1>
-                        <button onClick={() => this.taskCompleted(obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as completed</button>
+                        <button onClick={() => this.completion(obj.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as completed</button>
                     </div>
                     :
                     <div className="task_completed_div">
                         <h1>{obj.suggestion}</h1>
                         <h1>votes: {obj.votes}</h1>
                         <h1>Is completed</h1>
-                        <button onClick={() => this.taskNotCompleted(obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as NOT completed</button>
+                        <button onClick={() => this.completion(obj.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as NOT completed</button>
                     </div>
                 }
             </div>
@@ -100,3 +94,33 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { getTeam, getTeamSuggestions })(Team);
+
+
+
+
+
+
+
+
+//--------taskcompleted/notcompleted ---------
+// task(completed, id, assigned_id, votes) {
+//         axios.put(`/taskCompleted/${id}/${assigned_id}/${votes}/${!completed}`).then(res => {
+//             this.props.getTeamSuggestions(res.data)
+//         })
+// }
+// --------------- controller --------------
+// task: (req, res) => {
+//     const db= req.app.get('db');
+        // let sign = '';
+//      req.params.completed ? sign = + : sign = -;
+//     const{params} = req;
+//     db.taskNotCompleted([params.id, params.assigned_id, params.votes, params.completed, sign]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+// }
+// ---------------SQL-------------------
+// UPDATE "public"."suggestions" SET "completed"=$4 WHERE 
+// "suggestion_id"= $1;
+// UPDATE "public"."teams" SET "completed_votes"= completed_votes $5 $3 WHERE "id"=$2;
+// select * from suggestions where assigned_id = $2
+// order by completed;
+
+

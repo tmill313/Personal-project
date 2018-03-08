@@ -84,18 +84,15 @@ app.get('/auth/me', (req, res) => {
 app.get('/getTeams', ctrl.getTeams)
 app.get('/getSuggestions', ctrl.getSuggestions)
 app.delete('/delete/:id', ctrl.deleteSuggestion)
-app.put('/like', ctrl.addLike)
-app.put('/removeLike', ctrl.removeLike)
+app.put('/like', ctrl.like)
 app.post('/addSuggestion', ctrl.addSuggestion)
 app.get('/getTeam/:id', ctrl.getTeam)
 app.get('/getTeamSuggestions/:id', ctrl.getTeamSuggestions)
-app.put('/taskCompleted/:id/:assigned_id/:votes', ctrl.taskCompleted)
-app.put('/taskNotCompleted/:id/:assigned_id/:votes', ctrl.taskNotCompleted)
 app.put('/commitSuggestion/:id/:suggestion_id', ctrl.commitSuggestion)
 app.get('/getRole', ctrl.getRole)
 app.put('/setUser/:teamId/:position/:access', ctrl.setUser)
-app.put('/pushLike/:id', ctrl.pushLike)
-app.put('/spliceLike/:id', ctrl.spliceLike)
+app.put('/completion/:id/:assigned_id/:votes/:completed/:completed_votes', ctrl.completion)
+
 
 
 

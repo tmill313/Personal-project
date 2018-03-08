@@ -1,0 +1,7 @@
+.graph-filler {
+    height: 200px;
+    width: 200px;
+}
+.graph-wrapper {
+    display: inline-flex;
+}

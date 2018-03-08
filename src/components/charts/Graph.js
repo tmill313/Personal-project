@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { connect } from 'react-redux'
 import {getTeams} from '../ducks/reducer';
+import './Graph.css'
 
 class Graph extends Component {
    constructor() {
        super()
 
        this.state = {
+           votes: 0,
            data: {
                labels: [],
                datasets: [{
@@ -36,20 +38,29 @@ class Graph extends Component {
    }
 
    componentWillReceiveProps({teams}) {
+        let newcompleted_votes = teams.map(e => e.completed_votes).reduce((x,y) => x + y)
         let data = Object.assign({}, this.state.data)
         data.datasets[0].data = teams.map(e => e.completed_votes)
         data.labels = teams.map(e => e.team_name)
        this.setState({
-        data
+           votes: newcompleted_votes,
+            data: data
        })
    }
 
 
    render() {
+
        return (
+           <div className="graph-wrapper">
            <div className='graph'>
                <Doughnut data={this.state.data} height={350} width={650} />
-           </div>
+               </div>
+               <div className="graph-filler">
+                <h1># of completed votes: {this.state.votes}</h1>
+                </div>
+                </div>
+           
        )
    }
 }

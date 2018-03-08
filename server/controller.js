@@ -21,19 +21,25 @@ module.exports = {
         const {params} = req;
         db.deleteSuggestion(params.id).then(suggestions => res.status(200).send(suggestions))
     },
-    addLike: (req, res) => {
+    like: (req, res) => {
         const db = req.app.get('db');
-
-        const newVotes = req.body.votes += req.body.incrementer;
-        const {suggestion_id} = req.body;
-        db.addLike(newVotes, suggestion_id).then(suggestions => res.status(200).send(suggestions))
-    },
-    removeLike: (req, res) => {
-        const db = req.app.get('db');
-
-        const newVotes = req.body.votes -= req.body.incrementer;
-        const {suggestion_id} = req.body;
-        db.addLike(newVotes, suggestion_id).then(suggestions => res.status(200).send(suggestions))
+        let newVotes = 0;
+        let newArr = [...req.user.voted];
+        let index = newArr.indexOf(req.body.suggestion_id)
+        console.log(req.body)
+        if(req.body.liked) {
+            newVotes = req.body.votes -= req.body.incrementer;
+            newArr.splice(index, 1);
+        } else {
+            newVotes = req.body.votes += req.body.incrementer;
+            newArr.push(req.body.suggestion_id)
+        }
+        db.pushLike([newArr, req.user.user_id]).then(users => {
+            db.addLike([newVotes, req.body.suggestion_id]).then(suggestions => {
+                let data = {users, suggestions}
+                res.status(200).send(data)
+            })
+        })
     },
     getTeam: (req, res) => {
         const db = req.app.get('db');
@@ -47,17 +53,19 @@ module.exports = {
         const{params} = req;
         db.getTeamSuggestions([params.id]).then(teamSuggestions => res.status(200).send(teamSuggestions))
     },
-    taskCompleted: (req, res) => {
-        const db= req.app.get('db');
-
-        const{params} = req;
-        db.taskCompleted([params.id, params.assigned_id, params.votes]).then(teamSuggestions => res.status(200).send(teamSuggestions))
-    },
-    taskNotCompleted: (req, res) => {
-        const db= req.app.get('db');
-
-        const{params} = req;
-        db.taskNotCompleted([params.id, params.assigned_id, params.votes]).then(teamSuggestions => res.status(200).send(teamSuggestions))
+    completion: (req, res) => {
+        console.log(req.params)
+        const db = req.app.get('db');
+        let completedVotes = parseInt(req.params.completed_votes);
+        let theseVotes = parseInt(req.params.votes);
+        let newVotes = 0;
+        if(req.params.completed == 'true') {
+            newVotes = completedVotes += theseVotes;
+        } else {
+            newVotes = completedVotes -= theseVotes;
+        }
+        console.log(newVotes)
+        db.completion([req.params.id, req.params.assigned_id, newVotes, req.params.completed]).then(teamSuggestions => res.status(200).send(teamSuggestions))
     },
     commitSuggestion: (req, res) => {
         const db= req.app.get('db');
@@ -76,21 +84,7 @@ module.exports = {
         const{params} = req;
         db.setUser([req.user.user_id, params.teamId, params.position, params.access]).then(() => res.status(200).send())
     },
-    pushLike: (req, res) => {
-        const db = req.app.get('db');
-        let newArr = [...req.user.voted]
-        const{params} = req;
-        newArr.push(params.id)
-        db.pushLike([newArr, req.user.user_id]).then(user => res.status(200).send(user))
-    },
-    spliceLike: (req, res) => {
-        const db = req.app.get('db');
-        let newArr = [...req.user.voted]
-        const{params} = req;
-        let index = newArr.indexOf(params.id)
-        newArr.splice(index, 1)
-        db.pushLike([newArr, req.user.user_id]).then(user => res.status(200).send(user))
-    }
+
 
 
 

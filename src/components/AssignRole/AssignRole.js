@@ -14,6 +14,7 @@ export default class AssignRole extends Component {
             toggle: false
 
         }
+        this.setAccess=this.setAccess.bind(this)
     }
 
     componentWillMount() {
@@ -64,7 +65,12 @@ export default class AssignRole extends Component {
         })
     }
 
-
+    setAccess(value) {
+        this.setState({
+            access: value
+        })
+        console.log(this.state.access)
+    }
 
     render() {
 
@@ -103,9 +109,9 @@ export default class AssignRole extends Component {
                                 :
                                 <div>
                                     <h1>What is your role?</h1>
-                                    <button onClick={() => this.clickTeamMember()}>Team-Member</button>
-                                    <button onClick={() => this.clickManager()}>Manager</button>
-                                    <button onClick={() => this.clickExecutive()}>Executive</button>
+                                    <button onClick={() => this.clickTeamMember(1)}>Team-Member</button>
+                                    <button onClick={() => this.clickManager(2)}>Manager</button>
+                                    <button onClick={() => this.clickExecutive(3)}>Executive</button>
                                     <Link to='/dashboard'><button>Dashboard</button></Link>
                                 </div>
                     }
@@ -121,3 +127,27 @@ export default class AssignRole extends Component {
 
 
 }
+
+
+
+// setAccess(val) {
+//     this.setState({
+//         access: value
+//     })
+// }
+// will just pass in a value 1,2 or 3 on click.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
