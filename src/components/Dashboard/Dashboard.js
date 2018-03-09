@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { getTeams, getUser, getSuggestions } from '../ducks/reducer';
 import Graph from '../charts/Graph';
 import './Dashboard.css'
-
+import addSuggestion from './Asset 6.svg'
 
 class Dashboard extends Component {
     constructor() {
@@ -66,64 +66,76 @@ class Dashboard extends Component {
 
 
         let teamsBox = this.props.teams.sort((a, b) => b.completed_votes - a.completed_votes).map((obj) => (
-            <div>
-                <h1>{this.props.user ? obj.team_name : null}</h1>
-                <h3>{this.props.user ? obj.completed_votes : null}</h3>
-                <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link>
-            </div>
+            <Link to={`/Team/${obj.id}`}><div className="team-item">
+                <h5>{this.props.user ? obj.team_name : null}</h5>
+                <h5>{this.props.user ? obj.completed_votes : null}</h5>
+                {/* <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link> */}
+            </div></Link>
         ))
         if(this.props.suggestions.length > 0) {
         var suggBox = this.props.suggestions.sort((a, b) => b.votes - a.votes).map((obj) => (
 
             this.props.user.access === 3 ?
-                <div>
-                    <h1>{this.props.user ? obj.suggestion : null}</h1>
-                    <h3>assigned to - {obj.team_name}</h3>
-                    <p># of points: {this.props.user ? obj.votes : null}</p>
-                    <button onClick={() => this.deleteSuggestion(obj.suggestion_id)}>delete</button>
+                <div className="suggestion-item">
+                    <p className="suggestion-user">suggested by - {obj.first_name} {obj.last_name}</p>
+                    <h5 className="suggestion">{this.props.user ? obj.suggestion : null}</h5>
+                    <h5 className="assigned-team"> assigned to - {obj.team_name}</h5>
+                    <p className="vote-number"># of points: {this.props.user ? obj.votes : null}</p>
+                    <button className="delete-button" onClick={() => this.deleteSuggestion(obj.suggestion_id)}>delete</button>
                     {
                         !(obj.assigned_id === 1)
                             ?
                             null
                             :
-                            <button onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</button>
+                            <button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</button>
                     }
-                    <button onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
+                    <button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
                 </div>
                 :
                 this.props.user.access === 2 ?
-                    <div>
-                        <h1>{this.props.user ? obj.suggestion : null}</h1>
-                        <h3>assigned to - {obj.team_name}</h3>
-                        <p># of points: {this.props.user ? obj.votes : null}</p>
-                        <button onClick={() => this.deleteSuggestion(obj.suggestion_id)}>delete</button>
+                    <div className="suggestion-item">
+                        <p className="suggestion-user">suggested by - {obj.first_name} {obj.last_name}</p>
+                        <h5 className="suggestion">{this.props.user ? obj.suggestion : null}</h5>
+                        <h5 className="assigned-team">assigned to - {obj.team_name}</h5>
+                        <p className="vote-number"># of points: {this.props.user ? obj.votes : null}</p>
+                        <button className="delete-button" onClick={() => this.deleteSuggestion(obj.suggestion_id)}>delete</button>
                     {
                         !(obj.assigned_id === 1)
                         ?
                         null
                         :
-                        <button onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</button>
+                        <button className="like-button"onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 3)}>Like</button>
                 }
-                        <button onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
+                        <button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
                     </div>
                     :
-                    <div>
-                        <h1>{this.props.user ? obj.suggestion : null}</h1>
-                        <h3>assigned to - {obj.team_name}</h3>
-                        <p># of points: {this.props.user ? obj.votes : null}</p>
+                    <div className="suggestion-item">
+                        <p className="suggestion-user">suggested by - {obj.first_name} {obj.last_name}</p>
+                        <h5 className="suggestion">{this.props.user ? obj.suggestion : null}</h5>
+                        <h5 className="assigned-team">assigned to - {obj.team_name}</h5>
+                        <p className="vote-number"># of points: {this.props.user ? obj.votes : null}</p>
                     </div>
         ))}
         return (
             <div>
+                <header className="dash-header">
                 <h1>WELCOME, {this.props.user ? this.props.user.first_name : null}</h1>
-                <h1>Dashboard View</h1>
+                <a className="logout-button" href='http://localhost:3030/auth/logout'><button>Log out</button></a>
+                </header>
+                <div className="dash-main-container">
                 <div className="graph-wrapper">
                 <Graph/>
                 </div>
+                <div className="team-rankings">
                 {teamsBox}
+                </div>
+                <div className="suggestion-rankings">
                 {suggBox}
-                <Link to='/addSuggestion'><button>Add a suggestion</button></Link>
-                <a href='http://localhost:3030/auth/logout'><button>Log out</button></a>
+                </div>
+                <div>
+                <Link to='/addSuggestion'><img className="add-suggestion"src={addSuggestion} alt="add suggestion" /></Link>
+                </div>
+                </div>
             </div>
         )
     }

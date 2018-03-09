@@ -1,0 +1,118 @@
+body, html {
+    height: 100%;
+}
+
+/* ------------------header----------------------- */
+
+.login-background {
+    background-image: url("./Real-background-suggestionbox.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    height: 500vh;
+}
+.login-header {
+    position: fixed;
+    height: 60px;
+    width: 100%;
+    opacity: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.header-list {
+    display: inline-flex;
+    justify-content: space-around;
+    grid-column: 2 / 3;
+    justify-content: flex-end;
+    font-family:  myriad-pro, sans-serif;
+    color: white;
+    font-style: normal;
+    font-weight: 400;
+}
+.header-logo {
+    height: 115px;
+    width: 210px;
+    grid-column: 1 / 2;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+.header-login {
+    width: 105px;
+    height: 42px;
+    border: solid;
+    border-radius: 5px;
+    border-color: white;
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: myriad-pro, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px;
+    margin-right: 21px;
+}
+.flex-item {
+    padding: 5px;
+    margin-top: 10px;
+    
+    color: white;
+    font-weight: 100;
+    font-size: 21px;
+    text-align: center;
+    list-style: none;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+/* ---------------main-body---------------- */
+
+  .main-body-container {
+    display: grid;
+    grid-template-rows: 100vh 100vh 100vh 100vh 100vh;
+  }
+
+  .login-button {
+    width: 175px;
+    height: 59px;
+    background: #CD1731;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: myriad-pro, sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 21px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-left: 55px;
+}
+.section {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: 33.3% 33.3% 33.3%;
+}
+.section-1-main {
+    grid-row:  2 / 3;
+    grid-column: 2 / 3;
+    align-self: center;
+    justify-self: center;
+}
+.login-h{
+    font-family: myriad-pro, sans-serif;
+    font-style: normal;
+    color: white;
+}
+h1 {
+    font-weight: 700;
+    font-size: 72px;
+    font-family: myriad-pro, sans-serif;
+}
+h5 {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 33px;
+    font-family: myriad-pro, sans-serif;
+}

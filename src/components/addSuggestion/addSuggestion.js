@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux'
 import { typingNewSuggestion } from '../ducks/reducer';
+import './addSuggestion.css'
 
 class addSuggestion extends Component {
     constructor() {
@@ -26,11 +27,12 @@ class addSuggestion extends Component {
 
 
     render() {
+        let remainingChar = 300 - this.props.newSuggestion.length;
         if(!this.state.toggle) {
         return (
             <div>
-                <input onChange={e => this.props.typingNewSuggestion(e.target.value)} placeholder="suggest something"></input>
-                {/* need some kind of redirect so that when you click submit it takes you back to the dashboard, but not before the new suggestion has been added and rendered */}
+                <input className="suggestion-input"onChange={e => this.props.typingNewSuggestion(e.target.value)} placeholder="suggest something" type="text" maxlength="300"></input>
+                <p>you have {remainingChar} characters remaining</p>
                 <button onClick={() => this.createSuggestion()}>submit</button>
                 <Link to='/'><button>logout</button></Link>
                 <Link to='/dashboard'><button>Back to Dashboard</button></Link>

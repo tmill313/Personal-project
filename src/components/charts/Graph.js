@@ -16,17 +16,17 @@ class Graph extends Component {
                    label: 'Your LPI History',
                    data: [],
                    backgroundColor: [
-                       'rgba(14, 145, 161, 0.1)',
-                       'rgba(54, 162, 235, 0.2)',
-                       'rgba(255, 206, 86, 0.2)',
+                       'rgba(46, 41, 70, 0.6)',
+                       'rgba(205, 23, 49, 0.6)',
+                       'rgba(232, 181, 53, 0.6)',
                        'rgba(75, 192, 192, 0.2)',
                        'rgba(153, 102, 255, 0.2)',
                        'rgba(255, 159, 64, 0.2)'
                    ],
                    borderColor: [
-                       'rgba(14, 145, 161,1)',
-                       'rgba(54, 162, 235, 1)',
-                       'rgba(255, 206, 86, 1)',
+                       'rgba(46, 41, 70, 1)',
+                       'rgba(205, 23, 49, 1)',
+                       'rgba(232, 181, 53, 1)',
                        'rgba(75, 192, 192, 1)',
                        'rgba(153, 102, 255, 1)',
                        'rgba(255, 159, 64, 1)'
@@ -57,7 +57,7 @@ class Graph extends Component {
                <Doughnut data={this.state.data} height={350} width={650} />
                </div>
                <div className="graph-filler">
-                <h1># of completed votes: {this.state.votes}</h1>
+                <h1>{this.state.votes} Votes completed <br /> & <br /> counting.</h1>
                 </div>
                 </div>
            

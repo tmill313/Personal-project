@@ -1,1 +1,85 @@
+.dash-header {
+    display: flex;
+    width: 100vw;
+    height: 95px;
+    position: fixed;
+    background: #CD1731;
+    align-content: space-between;
+    justify-content: space-between;
+}
+.dash-main-container {
+}
+.graph-wrapper {
+    margin-top: 95px;
+}
+.logout-button {
+    margin-right: 25px;
+}
 
+/* --------------team rankings -------------------- */
+
+.team-rankings {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-top: 88px;
+}
+.team-item {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    height: 120px;
+    border-top: solid #E0E0E0;
+    width: 100%;
+}
+.suggestion-rankings {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-top: 88px;
+}
+.suggestion-item {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    height: 120px;
+    border-top: solid #E0E0E0;
+    width: 100%;
+}
+.suggestion{
+    grid-column: 2 / 3;
+    word-wrap: break-word;
+}
+.assigned-team {
+    grid-column: 3 / 4;
+}
+.vote-number {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+.like-button {
+    grid-column: 1 / 2;
+    height: 30px;
+    width: 80px;
+}
+.commit-button {
+    grid-column: 1 / 2;
+    height: 30px;
+    width: 80px;
+    margin-bottom: 5px;
+}
+.delete-button {
+    grid-column: 3 / 4;
+    height: 30px;
+    width: 80px;
+    margin-bottom: 5px;
+}
+.suggested-user {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+.add-suggestion {
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
