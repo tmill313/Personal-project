@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { getTeams, getUser, getSuggestions } from '../ducks/reducer';
+import { getTeams, getUser, getSuggestions, openModal } from '../ducks/reducer';
 import Graph from '../charts/Graph';
 import './Dashboard.css'
-import addSuggestion from './Asset 6.svg'
+import addSuggestion1 from './Asset 6.svg'
+import { Button, Segment, Item, Label } from 'semantic-ui-react';
+import ModalManager from '../Modals/Modal';
+
 
 class Dashboard extends Component {
     constructor() {
@@ -16,6 +19,7 @@ class Dashboard extends Component {
             newSuggestion: '',
             teams: [],
             user: {},
+            open: false
 
 
         }
@@ -34,13 +38,14 @@ class Dashboard extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if(newProps.suggestions.length) {
-        let suggestions = newProps.suggestions.map(obj => {
-            obj.voted = newProps.user.voted.some(e => e === obj.suggestion_id)}) 
-        this.setState({
-            suggestions
-        })
-    }
+        if (newProps.suggestions.length) {
+            let suggestions = newProps.suggestions.map(obj => {
+                obj.voted = newProps.user.voted.some(e => e === obj.suggestion_id)
+            })
+            this.setState({
+                suggestions
+            })
+        }
     }
 
     deleteSuggestion(id) {
@@ -50,10 +55,11 @@ class Dashboard extends Component {
     }
 
     like(liked, id, initialVal, incrementer) {
-    let body = { liked: liked, suggestion_id: id, votes: initialVal, incrementer: incrementer }
-    axios.put('/like', body).then(res => {
-    this.props.getSuggestions(res.data.suggestions)
-    this.props.getUser(res.data.user)})
+        let body = { liked: liked, suggestion_id: id, votes: initialVal, incrementer: incrementer }
+        axios.put('/like', body).then(res => {
+            this.props.getSuggestions(res.data.suggestions)
+            this.props.getUser(res.data.user)
+        })
     }
 
     commitSuggestion(id, suggestion_id) {
@@ -62,9 +68,13 @@ class Dashboard extends Component {
         })
     }
 
+
     render() {
-
-
+        const inlineStyle = {
+            segment: {
+                position: 'none !important'
+            }
+        };
         let teamsBox = this.props.teams.sort((a, b) => b.completed_votes - a.completed_votes).map((obj) => (
             <Link to={`/Team/${obj.id}`}><div className="team-item">
                 <h5>{this.props.user ? obj.team_name : null}</h5>
@@ -72,69 +82,99 @@ class Dashboard extends Component {
                 {/* <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link> */}
             </div></Link>
         ))
-        if(this.props.suggestions.length > 0) {
-        var suggBox = this.props.suggestions.sort((a, b) => b.votes - a.votes).map((obj) => (
+        if (this.props.suggestions.length > 0) {
+            var suggBox = this.props.suggestions.sort((a, b) => b.votes - a.votes).map((obj) => (
 
-            this.props.user.access === 3 ?
-                <div className="suggestion-item">
-                    <p className="suggestion-user">suggested by - {obj.first_name} {obj.last_name}</p>
-                    <h5 className="suggestion">{this.props.user ? obj.suggestion : null}</h5>
-                    <h5 className="assigned-team"> assigned to - {obj.team_name}</h5>
-                    <p className="vote-number"># of points: {this.props.user ? obj.votes : null}</p>
-                    <button className="delete-button" onClick={() => this.deleteSuggestion(obj.suggestion_id)}>delete</button>
-                    {
-                        !(obj.assigned_id === 1)
-                            ?
-                            null
-                            :
-                            <button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</button>
-                    }
-                    <button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
-                </div>
-                :
-                this.props.user.access === 2 ?
-                    <div className="suggestion-item">
-                        <p className="suggestion-user">suggested by - {obj.first_name} {obj.last_name}</p>
-                        <h5 className="suggestion">{this.props.user ? obj.suggestion : null}</h5>
-                        <h5 className="assigned-team">assigned to - {obj.team_name}</h5>
-                        <p className="vote-number"># of points: {this.props.user ? obj.votes : null}</p>
-                        <button className="delete-button" onClick={() => this.deleteSuggestion(obj.suggestion_id)}>delete</button>
-                    {
-                        !(obj.assigned_id === 1)
-                        ?
-                        null
-                        :
-                        <button className="like-button"onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 3)}>Like</button>
-                }
-                        <button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
-                    </div>
+                this.props.user.access === 3 ?
+                    <Item>
+                        <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
+
+                        <Item.Content>
+                            <Item.Header>suggested by - {obj.first_name} {obj.last_name}</Item.Header>
+                            <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
+                            <Item.Extra>
+                                <Label>assigned to - {obj.team_name}</Label>
+                                assigned to - {obj.team_name}
+                                # of points: {this.props.user ? obj.votes : null}
+                                <Button floated='right' className="delete-button" icon='remove' onClick={() => this.deleteSuggestion(obj.suggestion_id)}></Button>
+
+                                {
+                                    !(obj.assigned_id === 1)
+                                        ?
+                                        null
+                                        :
+                                        <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</Button>
+                                }
+                                <Button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit</Button>
+                            </Item.Extra>
+                        </Item.Content>
+                    </Item>
                     :
-                    <div className="suggestion-item">
-                        <p className="suggestion-user">suggested by - {obj.first_name} {obj.last_name}</p>
-                        <h5 className="suggestion">{this.props.user ? obj.suggestion : null}</h5>
-                        <h5 className="assigned-team">assigned to - {obj.team_name}</h5>
-                        <p className="vote-number"># of points: {this.props.user ? obj.votes : null}</p>
-                    </div>
-        ))}
+                    this.props.user.access === 2 ?
+                        <Item>
+                            <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
+
+                            <Item.Content>
+                                <Item.Header>suggested by - {obj.first_name} {obj.last_name}</Item.Header>
+                                <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
+                                <Item.Extra>
+                                    <Label>assigned to - {obj.team_name}</Label>
+                                    assigned to - {obj.team_name}
+                                    # of points: {this.props.user ? obj.votes : null}
+                                    <Button floated='right' className="delete-button" icon='remove' onClick={() => this.deleteSuggestion(obj.suggestion_id)}></Button>
+
+                                    {
+                                        !(obj.assigned_id === 1)
+                                            ?
+                                            null
+                                            :
+                                            <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 3)}>Like</Button>
+                                    }
+                                    <Button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit</Button>
+                                </Item.Extra>
+                            </Item.Content>
+                        </Item>
+                        :
+                        <Item>
+                            <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
+                            <Item.Content>
+                                <Item.Header>suggested by - {obj.first_name} {obj.last_name}</Item.Header>
+                                <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
+                                <Item.Extra>
+                                    assigned to - {obj.team_name}
+                                    # of points: {this.props.user ? obj.votes : null}
+                                </Item.Extra>
+                            </Item.Content>
+                        </Item>
+            ))
+        }
         return (
             <div>
                 <header className="dash-header">
-                <h1>WELCOME, {this.props.user ? this.props.user.first_name : null}</h1>
-                <a className="logout-button" href='http://localhost:3030/auth/logout'><button>Log out</button></a>
+                    <h1>WELCOME, {this.props.user ? this.props.user.first_name : null}</h1>
+                    <a className="logout-button" href='http://localhost:3030/auth/logout'><Button basic inverted>Log out</Button></a>
                 </header>
                 <div className="dash-main-container">
-                <div className="graph-wrapper">
-                <Graph/>
+                    <div className="graph-wrapper">
+                        <Graph />
+                    </div>
+                    <div className="team-rankings">
+                        {teamsBox}
+                    </div>
+                    <div className="suggestion-rankings">
+                        <Item.Group divided>
+                            {suggBox}
+                        </Item.Group>
+                    </div>
+                    <div>
+                        <Button className="add-suggestion" circular icon='plus' color='red' onClick={() => this.props.openModal({
+                            header: "Test content",
+                            content: "Test content 2"
+                        })}></Button>
+                    </div>
                 </div>
-                <div className="team-rankings">
-                {teamsBox}
-                </div>
-                <div className="suggestion-rankings">
-                {suggBox}
-                </div>
-                <div>
-                <Link to='/addSuggestion'><img className="add-suggestion"src={addSuggestion} alt="add suggestion" /></Link>
-                </div>
+                <div className="modal-holder">
+                    <ModalManager />
                 </div>
             </div>
         )
@@ -153,7 +193,7 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getTeams, getUser, getSuggestions })(Dashboard);
+export default connect(mapStateToProps, { getTeams, getUser, getSuggestions, openModal })(Dashboard);
 
 
 
@@ -177,18 +217,18 @@ export default connect(mapStateToProps, { getTeams, getUser, getSuggestions })(D
 // this.props.getUser(res.data)
 
 // ---- controller -----
-    // removeLike: (req, res) => {
-        // const db = req.app.get('db');
-        // let newVotes = 0;
-        // let newArr = [...req.user.voted]
+// removeLike: (req, res) => {
+// const db = req.app.get('db');
+// let newVotes = 0;
+// let newArr = [...req.user.voted]
 //          if(req.body.liked) {
-    // newVotes = req.body.votes -= req.body.incrementer
-    // newArr.splice(newArr.indexOf(params.id), 1)
+// newVotes = req.body.votes -= req.body.incrementer
+// newArr.splice(newArr.indexOf(params.id), 1)
 // } else { newVotes = req.body.votes += req.body.incrementer
 // newArr.push(params.id)
 // };
-        // const {suggestion_id} = req.body;
-        // db.addLike(newVotes, suggestion_id, newArr, req.user.user_id).then(suggestions => res.status(200).send(suggestions))
+// const {suggestion_id} = req.body;
+// db.addLike(newVotes, suggestion_id, newArr, req.user.user_id).then(suggestions => res.status(200).send(suggestions))
 // })
 // -------SQL---------
 // UPDATE "public"."users" SET "voted"=$3 WHERE "user_id"=$4;
@@ -215,7 +255,21 @@ export default connect(mapStateToProps, { getTeams, getUser, getSuggestions })(D
 
 
 
-
+{/* <div >
+<p className="suggestion-user">suggested by - {obj.first_name} {obj.last_name}</p>
+<h5 className="suggestion">{this.props.user ? obj.suggestion : null}</h5>
+<h5 className="assigned-team"> assigned to - {obj.team_name}</h5>
+<p className="vote-number"># of points: {this.props.user ? obj.votes : null}</p>
+<Button className="delete-button"  icon='remove' onClick={() => this.deleteSuggestion(obj.suggestion_id)}></Button>
+{
+    !(obj.assigned_id === 1)
+        ?
+        null
+        :
+        <button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</button>
+}
+<button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit suggestion to team</button>
+</div> */}
 
 
 

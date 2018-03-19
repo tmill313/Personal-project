@@ -5,3 +5,11 @@
 .graph-wrapper {
     display: inline-flex;
 }
+.counter {
+    font-size: 150px;
+    font-weight: 700;
+}
+.counter-text {
+    font-size: 55px;
+    font-weight: 400;
+}

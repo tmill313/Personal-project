@@ -3,7 +3,8 @@ module.exports = {
         const db = req.app.get('db');
         const suggid = {suggid: 5};
         const{suggestion, date, user_id, votes, assigned_id, completed} = req.body;
-        db.addSuggestion(suggestion, date, user_id, votes, assigned_id, completed).then(() => res.status(200).send());
+        db.addSuggestion(suggestion, date, user_id, votes, assigned_id, completed).then(
+        suggestions => res.status(200).send(suggestions));
     },
     getTeams: (req, res) => {
         const db = req.app.get('db');

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { connect } from 'react-redux'
 import {getTeams} from '../ducks/reducer';
+import CountUp from 'react-countup';
 import './Graph.css'
 
 class Graph extends Component {
@@ -57,7 +58,8 @@ class Graph extends Component {
                <Doughnut data={this.state.data} height={350} width={650} />
                </div>
                <div className="graph-filler">
-                <h1>{this.state.votes} Votes completed <br /> & <br /> counting.</h1>
+               
+                <h1 className="counter-text"><CountUp className='counter'start={0} end={this.state.votes} /> votes completed & counting.</h1>
                 </div>
                 </div>
            

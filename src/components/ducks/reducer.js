@@ -6,7 +6,8 @@ let initialState = {
         voted: []
     },
     team: [],
-    teamSuggestions: []
+    teamSuggestions: [],
+    modalProps: null
 }
 
 const TYPING_NEW_SUGGESTION = "TYPING_NEW_SUGGESTION"
@@ -15,7 +16,8 @@ const GET_USER = "GET_USER"
 const GET_SUGGESTIONS = "GET_SUGGESTIONS"
 const GET_TEAM = "GET_TEAM"
 const GET_TEAM_SUGGESTIONS = "GET_TEAM_SUGGESTIONS"
-
+const MODAL_OPEN = "MODAL_OPEN"
+const MODAL_CLOSE = "MODAL_CLOSE"
 
 
 
@@ -36,6 +38,10 @@ function reducer(state=initialState, action) {
         return Object.assign({}, state, {team: action.payload})
         case GET_TEAM_SUGGESTIONS:
         return Object.assign({}, state, {teamSuggestions: action.payload})
+        case MODAL_OPEN:
+        return Object.assign({}, state, {modalProps: action.payload})
+        case MODAL_CLOSE:
+        return Object.assign({}, state, {modalProps: null})
 
 
         default: return state;
@@ -74,4 +80,14 @@ export function getTeamSuggestions(s) {
     payload: s
     }
 }
+export function openModal(m) {
+    return {type: MODAL_OPEN,
+    payload: m
+    }
+}
+export function closeModal() {
+    return {type: MODAL_CLOSE,
+    }
+}
+
 export default reducer

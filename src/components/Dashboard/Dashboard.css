@@ -6,6 +6,7 @@
     background: #CD1731;
     align-content: space-between;
     justify-content: space-between;
+    z-index: 1000;
 }
 .dash-main-container {
 }
@@ -40,7 +41,7 @@
 .suggestion-item {
     display: grid;
     grid-template-columns: 25% 50% 25%;
-    height: 120px;
+    height: 150px;
     border-top: solid #E0E0E0;
     width: 100%;
 }
@@ -68,9 +69,10 @@
 }
 .delete-button {
     grid-column: 3 / 4;
-    height: 30px;
-    width: 80px;
     margin-bottom: 5px;
+    height: 45px;
+    width: 45px;
+    position: none;
 }
 .suggested-user {
     grid-column: 1 / 2;
@@ -82,4 +84,9 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
+}
+.modal-holder {
+    position: fixed;
+    top: 50%;
+    left: 50%;
 }
