@@ -67,8 +67,10 @@
 .commit-button {
     grid-column: 1 / 2;
     height: 37px;
-    width: 104px;
+    width: 151px;
     margin-bottom: 5px;
+    margin-left: 10px !important;
+    vertical-align: baseline!important;
 }
 .delete-button {
     grid-column: 3 / 4;

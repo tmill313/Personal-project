@@ -138,34 +138,74 @@ class Dashboard extends Component {
                                     </Button>
                                         // <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</Button>
                                 }
-                                <Button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit</Button>
+                                {
+                                (obj.assigned_id === 1)
+                                 ?
+                                <Button animated='vertical' className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>
+                                <Button.Content visible>commit</Button.Content>
+                                <Button.Content hidden><Icon color='green' name='check' />committed</Button.Content>
+                                </Button>
+                                :
+                                <Button disabled className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}><Icon color='green' name='check' />committed</Button>
+                                }
                             </Item.Extra>
                         </Item.Content>
                     </Item>
                     :
                     this.props.user.access === 2 ?
-                        <Item>
-                            <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
+                    <Item>
+                    <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
 
-                            <Item.Content>
-                                <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
-                                <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
-                                <Item.Extra>
-                                    assigned to - {obj.team_name}
-                                    # of points: {this.props.user ? obj.votes : null}
-                                    <Button floated='right' className="delete-button" icon='remove' onClick={() => this.deleteSuggestion(obj.suggestion_id)}></Button>
+                    <Item.Content>
+                        <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
+                        <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
+                        <Item.Extra>
+                            assigned to - {obj.team_name}
+                            </Item.Extra>
+                            <Item.Extra>
+                            <Button floated='right' className="delete-button" icon='remove' onClick={() => this.deleteSuggestion(obj.suggestion_id)}></Button>
 
-                                    {
-                                        !(obj.assigned_id === 1)
-                                            ?
-                                            null
-                                            :
-                                            <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 3)}>Like</Button>
-                                    }
-                                    <Button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit</Button>
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>
+                            {
+                                !(obj.assigned_id === 1)
+                                    ?
+                                    <Button disabled className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 3)} as='div' labelPosition='right'>
+                                    <Button color='red'>
+                                        <Icon name='empty heart' />
+                                    </Button>
+                                    <Label as='a' basic color='red' pointing='left'>{this.props.user ? obj.votes : null}</Label>
+                                </Button>
+                                    :
+                                    (obj.voted)
+                                    ?
+                                    <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 3)} as='div' labelPosition='right'>
+                                    <Button  color='red' animated='vertical'>
+                                    <Button.Content hidden>
+                                    <Icon name='arrow down' />
+                                    </Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name='empty heart' />
+                                    </Button.Content>
+                                    </Button>
+                                    <Label as='a' basic color='red' pointing='left'>{this.props.user ? obj.votes : null}</Label>
+                                </Button>
+                                :
+                                <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 3)} as='div' labelPosition='right'>
+                                    <Button  color='red' animated='vertical'>
+                                    <Button.Content hidden>
+                                    <Icon name='arrow up' />
+                                    </Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name='empty heart' />
+                                    </Button.Content>
+                                    </Button>
+                                    <Label as='a' basic color='red' pointing='left'>{this.props.user ? obj.votes : null}</Label>
+                                </Button>
+                                    // <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</Button>
+                            }
+                            <Button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit</Button>
+                        </Item.Extra>
+                    </Item.Content>
+                </Item>
                         :
                         <Item>
                             <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
