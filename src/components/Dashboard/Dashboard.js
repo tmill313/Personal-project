@@ -6,8 +6,9 @@ import { getTeams, getUser, getSuggestions, openModal } from '../ducks/reducer';
 import Graph from '../charts/Graph';
 import './Dashboard.css'
 import addSuggestion1 from './Asset 6.svg'
-import { Button, Segment, Item, Label } from 'semantic-ui-react';
+import { Button, Segment, Item, Label, Icon } from 'semantic-ui-react';
 import ModalManager from '../Modals/Modal';
+import suggestionLogo from './sugg-logo-2.svg';
 
 
 class Dashboard extends Component {
@@ -50,6 +51,7 @@ class Dashboard extends Component {
 
     deleteSuggestion(id) {
         axios.delete(`/delete/${id}`).then(res => {
+            console.log(res.data)
             this.props.getSuggestions(res.data)
         })
     }
@@ -57,6 +59,7 @@ class Dashboard extends Component {
     like(liked, id, initialVal, incrementer) {
         let body = { liked: liked, suggestion_id: id, votes: initialVal, incrementer: incrementer }
         axios.put('/like', body).then(res => {
+            console.log(res.data.suggestions)
             this.props.getSuggestions(res.data.suggestions)
             this.props.getUser(res.data.user)
         })
@@ -76,7 +79,7 @@ class Dashboard extends Component {
             }
         };
         let teamsBox = this.props.teams.sort((a, b) => b.completed_votes - a.completed_votes).map((obj) => (
-            <Link to={`/Team/${obj.id}`}><div className="team-item">
+            <Link to={`/Team/${obj.id}`} style={{ textDecoration: 'none' }}><div className="team-item">
                 <h5>{this.props.user ? obj.team_name : null}</h5>
                 <h5>{this.props.user ? obj.completed_votes : null}</h5>
                 {/* <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link> */}
@@ -90,20 +93,50 @@ class Dashboard extends Component {
                         <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
 
                         <Item.Content>
-                            <Item.Header>suggested by - {obj.first_name} {obj.last_name}</Item.Header>
+                            <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
                             <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
                             <Item.Extra>
-                                <Label>assigned to - {obj.team_name}</Label>
                                 assigned to - {obj.team_name}
-                                # of points: {this.props.user ? obj.votes : null}
+                                </Item.Extra>
+                                <Item.Extra>
                                 <Button floated='right' className="delete-button" icon='remove' onClick={() => this.deleteSuggestion(obj.suggestion_id)}></Button>
 
                                 {
                                     !(obj.assigned_id === 1)
                                         ?
-                                        null
+                                        <Button disabled className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)} as='div' labelPosition='right'>
+                                        <Button color='red'>
+                                            <Icon name='empty heart' />
+                                        </Button>
+                                        <Label as='a' basic color='red' pointing='left'>{this.props.user ? obj.votes : null}</Label>
+                                    </Button>
                                         :
-                                        <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</Button>
+                                        (obj.voted)
+                                        ?
+                                        <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)} as='div' labelPosition='right'>
+                                        <Button  color='red' animated='vertical'>
+                                        <Button.Content hidden>
+                                        <Icon name='arrow down' />
+                                        </Button.Content>
+                                        <Button.Content visible>
+                                            <Icon name='empty heart' />
+                                        </Button.Content>
+                                        </Button>
+                                        <Label as='a' basic color='red' pointing='left'>{this.props.user ? obj.votes : null}</Label>
+                                    </Button>
+                                    :
+                                    <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)} as='div' labelPosition='right'>
+                                        <Button  color='red' animated='vertical'>
+                                        <Button.Content hidden>
+                                        <Icon name='arrow up' />
+                                        </Button.Content>
+                                        <Button.Content visible>
+                                            <Icon name='empty heart' />
+                                        </Button.Content>
+                                        </Button>
+                                        <Label as='a' basic color='red' pointing='left'>{this.props.user ? obj.votes : null}</Label>
+                                    </Button>
+                                        // <Button className="like-button" onClick={() => this.like(obj.voted, obj.suggestion_id, obj.votes, 5)}>Like</Button>
                                 }
                                 <Button className="commit-button" onClick={() => this.commitSuggestion(this.props.user.team_id, obj.suggestion_id)}>commit</Button>
                             </Item.Extra>
@@ -115,10 +148,9 @@ class Dashboard extends Component {
                             <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
 
                             <Item.Content>
-                                <Item.Header>suggested by - {obj.first_name} {obj.last_name}</Item.Header>
+                                <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
                                 <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
                                 <Item.Extra>
-                                    <Label>assigned to - {obj.team_name}</Label>
                                     assigned to - {obj.team_name}
                                     # of points: {this.props.user ? obj.votes : null}
                                     <Button floated='right' className="delete-button" icon='remove' onClick={() => this.deleteSuggestion(obj.suggestion_id)}></Button>
@@ -138,7 +170,7 @@ class Dashboard extends Component {
                         <Item>
                             <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
                             <Item.Content>
-                                <Item.Header>suggested by - {obj.first_name} {obj.last_name}</Item.Header>
+                                <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
                                 <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
                                 <Item.Extra>
                                     assigned to - {obj.team_name}
@@ -150,10 +182,18 @@ class Dashboard extends Component {
         }
         return (
             <div>
-                <header className="dash-header">
-                    <h1>WELCOME, {this.props.user ? this.props.user.first_name : null}</h1>
-                    <a className="logout-button" href='http://localhost:3030/auth/logout'><Button basic inverted>Log out</Button></a>
-                </header>
+                <Item.Group className="dash-header">
+                    <Item>
+                    <Item.Image src={suggestionLogo} />
+                        <Item.Content>
+                            <Item.Header>Welcome, {this.props.user ? this.props.user.first_name : null}</Item.Header>
+                            <Item.Description>{this.props.user ? this.props.user.position : null}</Item.Description>
+                            <Item.Extra>
+                                <a href='http://localhost:3030/auth/logout'><Button floated='right' className="logout-button" basic inverted>Log out</Button></a>
+                            </Item.Extra>
+                        </Item.Content>
+                    </Item>
+                </Item.Group>
                 <div className="dash-main-container">
                     <div className="graph-wrapper">
                         <Graph />
@@ -167,10 +207,11 @@ class Dashboard extends Component {
                         </Item.Group>
                     </div>
                     <div>
-                        <Button className="add-suggestion" circular icon='plus' color='red' onClick={() => this.props.openModal({
+                        <Button className="add-suggestion" circular color='red' icon='plus' onClick={() => this.props.openModal({
                             header: "Test content",
                             content: "Test content 2"
-                        })}></Button>
+                        })}>
+                        </Button>
                     </div>
                 </div>
                 <div className="modal-holder">
