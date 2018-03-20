@@ -9,6 +9,13 @@ import addSuggestion1 from './Asset 6.svg'
 import { Button, Segment, Item, Label, Icon } from 'semantic-ui-react';
 import ModalManager from '../Modals/Modal';
 import suggestionLogo from './sugg-logo-2.svg';
+import robot from './Robot.svg';
+import bigEye from './big-eye.svg';
+import brain from './brain-alien.svg';
+import cactus from './cactus.svg';
+import orangeAlien from './orange-alien.svg';
+import pinkAlien from './pink-alien.svg';
+import spottedAlien from './spotted-alien.svg';
 
 
 class Dashboard extends Component {
@@ -90,8 +97,32 @@ class Dashboard extends Component {
 
                 this.props.user.access === 3 ?
                     <Item>
-                        <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
-
+                        {(obj.first_name.endsWith('a' || 'b' || 'c' || 'd'))
+                        ?
+                        <Item.Image circular size='tiny' src={robot} />
+                        :
+                        (obj.first_name.endsWith('e' || 'f' || 'g' || 'h'))
+                        ?
+                        <Item.Image circular size='tiny' src={bigEye} />
+                        :
+                        (obj.first_name.endsWith('i' || 'j' || 'k' || 'l'))
+                        ?
+                        <Item.Image circular size='tiny' src={brain} />
+                        :
+                        (obj.first_name.endsWith('m' || 'n' || 'o' || 'p'))
+                        ?
+                        <Item.Image circular size='tiny' src={cactus} />
+                        :
+                        (obj.first_name.endsWith('q' || 'r' || 's'))
+                        ?
+                        <Item.Image circular size='tiny' src={orangeAlien} />
+                        :
+                        (obj.first_name.endsWith('u' || 'v' || 'w'))
+                        ?
+                        <Item.Image circular size='tiny' src={pinkAlien} />
+                        :
+                        <Item.Image circular size='tiny' src={spottedAlien} />
+                        }       
                         <Item.Content>
                             <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
                             <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>

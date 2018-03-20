@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from "react-redux";
-import { Modal, Input, Grid, Icon, Button, Transition } from "semantic-ui-react";
-
-import { closeModal, typingNewSuggestion, getSuggestions } from "../ducks/reducer";
+import { Modal, Input, Grid, Icon, Button, Transition, Image } from "semantic-ui-react";
+import iconImage from './Asset 4.svg';
+import { closeModal, typingNewSuggestion, getSuggestions, getUser } from "../ducks/reducer";
+import './Modal.css'
 
 export class ModalManager extends Component {
     constructor() {
@@ -15,10 +16,14 @@ export class ModalManager extends Component {
             toggle: false
         }
     }
-
+    componentDidMount() {
+        axios.get('/auth/me').then(res => {
+            this.props.getUser(res.data)
+        })
+    }
 
     createSuggestion() {
-        let body = { suggestion: this.props.newSuggestion, date: '12/12/12', user_id: 1, votes: 0, assigned_id: 1, completed: false };
+        let body = { suggestion: this.props.newSuggestion, date: '12/12/12', user_id: this.props.user.user_id, votes: 0, assigned_id: 1, completed: false };
         axios.post('/addSuggestion', body).then(res => {
             console.log(res.data)
             this.props.getSuggestions(res.data)
@@ -54,12 +59,25 @@ export class ModalManager extends Component {
             const { modalProps = {} } = modalConfiguration;
             renderedComponent =
                 <Modal dimmer='inverted' style={inlineStyle.modal}{...Object.assign({}, modalProps, defaultProps)}><Modal.Content>
-                    <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>
-                    <div>
-                    <Input fluid focus onChange={e => this.props.typingNewSuggestion(e.target.value)} onKeyPress={e => this.onKeyPress(e)}/>
-                    <Button labelPosition='left' icon onClick={() => this.createSuggestion()}><Icon name='plus square outline' /> Submit</Button>
-                    </div>
-                    <p>you have {remainingChar} characters remaining</p>
+                    <Image fluid src={iconImage}/>
+                    <Input fluid focus onChange={e => this.props.typingNewSuggestion(e.target.value)} onKeyPress={e => this.onKeyPress(e)}
+                    action={{ color: 'red', icon: 'plus square outline', onClick:() => this.createSuggestion() }}
+                    actionPosition='right'
+                    placeholder='Whatcha thinkin, Abe Lincoln?'/>
+                    {(remainingChar > 295)
+                    ?
+                    <p className='encouragement'>You have 300 characters to convince us to institute Mocha-Frappe-Latte Fridays, every day of the week.</p>
+                    :
+                    (remainingChar > 250)
+                    ?
+                    <p className='encouragement'>Keep going.  All of our Mocha-Frappe dreams are riding on this.</p>
+                    :
+                    (remainingChar > 225)
+                    ?
+                    <p className='encouragement'>You are a wizard of words, my friend.</p>
+                    :
+                    <p className='encouragement'>It's official.  You have made the world a better place.</p>
+                    }
                 </Modal.Content>
                 </Modal>;
         }
@@ -71,8 +89,9 @@ export class ModalManager extends Component {
 function mapStateToProps(state) {
     return {
         modalConfiguration: state.modalProps,
-        newSuggestion: state.newSuggestion
+        newSuggestion: state.newSuggestion, 
+        user: state.user
     };
 }
 
-export default connect(mapStateToProps, { closeModal, typingNewSuggestion, getSuggestions })(ModalManager);
+export default connect(mapStateToProps, { closeModal, typingNewSuggestion, getSuggestions, getUser })(ModalManager);
