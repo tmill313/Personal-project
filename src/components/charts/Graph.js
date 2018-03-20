@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Doughnut } from 'react-chartjs-2'
+import { Doughnut, Line } from 'react-chartjs-2'
 import { connect } from 'react-redux'
 import {getTeams} from '../ducks/reducer';
 import CountUp from 'react-countup';
@@ -14,33 +14,59 @@ class Graph extends Component {
            data: {
                labels: [],
                datasets: [{
-                   label: 'Your LPI History',
+                   label: 'Completed votes',
                    data: [],
                    backgroundColor: [
-                       'rgba(46, 41, 70, 0.6)',
-                       'rgba(205, 23, 49, 0.6)',
-                       'rgba(232, 181, 53, 0.6)',
+                       'rgba(255, 89, 100, 1)',
+                       'rgba(68, 204, 255, 1)',
+                       'rgba(69, 240, 223, 1)',
                        'rgba(75, 192, 192, 0.2)',
                        'rgba(153, 102, 255, 0.2)',
                        'rgba(255, 159, 64, 0.2)'
                    ],
                    borderColor: [
-                       'rgba(46, 41, 70, 1)',
-                       'rgba(205, 23, 49, 1)',
-                       'rgba(232, 181, 53, 1)',
+                       'rgba(255, 89, 100, 1)',
+                       'rgba(68, 204, 255, 1)',
+                       'rgba(69, 240, 223, 1)',
                        'rgba(75, 192, 192, 1)',
                        'rgba(153, 102, 255, 1)',
                        'rgba(255, 159, 64, 1)'
                    ],
                    borderWidth: 1
                }]
-           }
+           },
+           data2: {
+            labels: ["Q1", "Q2", "Q3", "Q4"],
+            datasets: [{
+                label: 'Total completed votes',
+                data: [677, 567, 544, 3],
+                backgroundColor: [
+                    'rgba(255, 89, 100, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 89, 100, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
        }
    }
 
    componentWillReceiveProps({teams}) {
         let newcompleted_votes = teams.map(e => e.completed_votes).reduce((x,y) => x + y)
         let data = Object.assign({}, this.state.data)
+        let graphVote = Object.assign({}, this.state.data2)
+        graphVote.datasets[0].data.splice(graphVote.datasets[0].data.length-1, 1, newcompleted_votes)
         data.datasets[0].data = teams.map(e => e.completed_votes)
         data.labels = teams.map(e => e.team_name)
        this.setState({
@@ -50,16 +76,19 @@ class Graph extends Component {
    }
 
 
+
    render() {
 
        return (
            <div className="graph-wrapper">
            <div className='graph'>
-               <Doughnut data={this.state.data} height={350} width={650} />
+               <Doughnut data={this.state.data} height={350} width={400} />
                </div>
                <div className="graph-filler">
-               
                 <h1 className="counter-text"><CountUp className='counter'start={0} end={this.state.votes} /> votes completed & counting.</h1>
+                </div>
+                <div className='line-graph'>
+                <Line data={this.state.data2} height={250} width={400} />
                 </div>
                 </div>
            

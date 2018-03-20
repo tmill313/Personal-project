@@ -97,6 +97,7 @@ class Dashboard extends Component {
 
                 this.props.user.access === 3 ?
                     <Item>
+                        
                         {(obj.first_name.endsWith('a' || 'b' || 'c' || 'd'))
                         ?
                         <Item.Image circular size='tiny' src={robot} />
@@ -125,8 +126,8 @@ class Dashboard extends Component {
                         }       
                         <Item.Content>
                             <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
-                            <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
-                            <Item.Extra>
+                            <Item.Description className='item-description'>{this.props.user ? obj.suggestion : null}</Item.Description>
+                            <Item.Extra className='item-extra'>
                                 assigned to - {obj.team_name}
                                 </Item.Extra>
                                 <Item.Extra>
@@ -185,12 +186,37 @@ class Dashboard extends Component {
                     :
                     this.props.user.access === 2 ?
                     <Item>
-                    <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
+                        {(obj.first_name.endsWith('a' || 'b' || 'c' || 'd'))
+                        ?
+                        <Item.Image circular size='tiny' src={robot} />
+                        :
+                        (obj.first_name.endsWith('e' || 'f' || 'g' || 'h'))
+                        ?
+                        <Item.Image circular size='tiny' src={bigEye} />
+                        :
+                        (obj.first_name.endsWith('i' || 'j' || 'k' || 'l'))
+                        ?
+                        <Item.Image circular size='tiny' src={brain} />
+                        :
+                        (obj.first_name.endsWith('m' || 'n' || 'o' || 'p'))
+                        ?
+                        <Item.Image circular size='tiny' src={cactus} />
+                        :
+                        (obj.first_name.endsWith('q' || 'r' || 's'))
+                        ?
+                        <Item.Image circular size='tiny' src={orangeAlien} />
+                        :
+                        (obj.first_name.endsWith('u' || 'v' || 'w'))
+                        ?
+                        <Item.Image circular size='tiny' src={pinkAlien} />
+                        :
+                        <Item.Image circular size='tiny' src={spottedAlien} />
+                        } 
 
                     <Item.Content>
                         <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
-                        <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
-                        <Item.Extra>
+                        <Item.Description className='item-description'>{this.props.user ? obj.suggestion : null}</Item.Description>
+                        <Item.Extra className='item-extra'>
                             assigned to - {obj.team_name}
                             </Item.Extra>
                             <Item.Extra>
@@ -239,11 +265,36 @@ class Dashboard extends Component {
                 </Item>
                         :
                         <Item>
-                            <Item.Image circular size='tiny' src='./Dashboard/Asset 6.svg' />
+                        {(obj.first_name.endsWith('a' || 'b' || 'c' || 'd'))
+                        ?
+                        <Item.Image circular size='tiny' src={robot} />
+                        :
+                        (obj.first_name.endsWith('e' || 'f' || 'g' || 'h'))
+                        ?
+                        <Item.Image circular size='tiny' src={bigEye} />
+                        :
+                        (obj.first_name.endsWith('i' || 'j' || 'k' || 'l'))
+                        ?
+                        <Item.Image circular size='tiny' src={brain} />
+                        :
+                        (obj.first_name.endsWith('m' || 'n' || 'o' || 'p'))
+                        ?
+                        <Item.Image circular size='tiny' src={cactus} />
+                        :
+                        (obj.first_name.endsWith('q' || 'r' || 's'))
+                        ?
+                        <Item.Image circular size='tiny' src={orangeAlien} />
+                        :
+                        (obj.first_name.endsWith('u' || 'v' || 'w'))
+                        ?
+                        <Item.Image circular size='tiny' src={pinkAlien} />
+                        :
+                        <Item.Image circular size='tiny' src={spottedAlien} />
+                        } 
                             <Item.Content>
                                 <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
-                                <Item.Description>{this.props.user ? obj.suggestion : null}</Item.Description>
-                                <Item.Extra>
+                                <Item.Description className='item-description'>{this.props.user ? obj.suggestion : null}</Item.Description>
+                                <Item.Extra className='item-extra'>
                                     assigned to - {obj.team_name}
                                     # of points: {this.props.user ? obj.votes : null}
                                 </Item.Extra>
@@ -257,8 +308,8 @@ class Dashboard extends Component {
                     <Item>
                     <Item.Image src={suggestionLogo} />
                         <Item.Content>
-                            <Item.Header>Welcome, {this.props.user ? this.props.user.first_name : null}</Item.Header>
-                            <Item.Description>{this.props.user ? this.props.user.position : null}</Item.Description>
+                            <Item.Header className='header-font'>Welcome, {this.props.user ? this.props.user.first_name : null}</Item.Header>
+                            <Item.Description className='header-font'>{this.props.user ? this.props.user.position : null}</Item.Description>
                             <Item.Extra>
                                 <a href='http://localhost:3030/auth/logout'><Button floated='right' className="logout-button" basic inverted>Log out</Button></a>
                             </Item.Extra>
@@ -266,6 +317,7 @@ class Dashboard extends Component {
                     </Item>
                 </Item.Group>
                 <div className="dash-main-container">
+                <div className='header-filler'></div>
                     <div className="graph-wrapper">
                         <Graph />
                     </div>

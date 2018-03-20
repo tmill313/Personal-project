@@ -1,9 +1,14 @@
+
+.graph-wrapper {
+    display: grid;
+    grid-template-columns: 30.3vw 25vw 41.6vw;
+}
 .graph-filler {
     height: 200px;
     width: 200px;
-}
-.graph-wrapper {
-    display: inline-flex;
+    margin-right: 10vw;
+    margin-left: 4vw;
+    grid-column: 2 / 3;
 }
 .counter {
     font-size: 150px;
@@ -12,4 +17,10 @@
 .counter-text {
     font-size: 55px;
     font-weight: 400;
+}
+.line-graph {
+    grid-column: 3 / 4;
+}
+.graph {
+    grid-column: 1 / 2;
 }

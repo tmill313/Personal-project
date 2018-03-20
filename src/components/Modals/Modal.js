@@ -42,7 +42,7 @@ export class ModalManager extends Component {
 
         const defaultProps = {
             defaultOpen: true,
-            closeIcon: true,
+            closeIcon: false,
             onClose: this.props.closeModal
         };
         const inlineStyle = {

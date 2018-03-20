@@ -8,6 +8,17 @@
     justify-content: space-between; */
     z-index: 1000;
 }
+.header-filler {
+    width: 100vw;
+    height: 1px;
+}
+.header-font {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 33px;
+    font-family: myriad-pro, sans-serif;
+    color: white;
+}
 .dash-main-container {
 }
 .graph-wrapper {
@@ -62,7 +73,7 @@
 .like-button {
     grid-column: 1 / 2;
     height: 37px;
-    width: 104px;
+    width: 115px;
 }
 .commit-button {
     grid-column: 1 / 2;
@@ -95,4 +106,17 @@
     position: fixed;
     top: 50%;
     left: 50%;
+}
+.item-description {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 33px;
+    font-family: myriad-pro, sans-serif;
+}
+.item-extra {
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 33px;
+    font-family: myriad-pro, sans-serif;
+    color: gray;
 }

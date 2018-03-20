@@ -4,6 +4,15 @@ import axios from 'axios';
 import { connect } from 'react-redux'
 import { getTeam, getTeamSuggestions } from '../ducks/reducer';
 import './Team.css'
+import { Button, Item, Label, Icon } from 'semantic-ui-react';
+import robot from './Robot.svg';
+import bigEye from './big-eye.svg';
+import brain from './brain-alien.svg';
+import cactus from './cactus.svg';
+import orangeAlien from './orange-alien.svg';
+import pinkAlien from './pink-alien.svg';
+import spottedAlien from './spotted-alien.svg';
+
 
 class Team extends Component {
     constructor() {
@@ -30,78 +39,143 @@ class Team extends Component {
     render() {
         let thisTeamSuggestions = this.props.teamSuggestions.map(obj => (
             this.props.user.access === 2 || this.props.user.access === 3 ?
-            <div>
-                {!obj.completed ?
-                    <div className="task_not_completed_div">
-                        <h1>{obj.suggestion}</h1>
-                        <h1>votes: {obj.votes}</h1>
-                        <h1>Is currently being worked on</h1>
-                        <button onClick={() => this.completion(this.props.team.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as completed</button>
-                    </div>
-                    :
-                    <div className="task_completed_div">
-                        <h1>{obj.suggestion}</h1>
-                        <h1>votes: {obj.votes}</h1>
-                        <h1>Is completed</h1>
-                        <button onClick={() => this.completion(this.props.team.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>mark as NOT completed</button>
-                    </div>
-                }
-            </div>
+                <Item>
+                        {(obj.first_name.endsWith('a' || 'b' || 'c' || 'd'))
+                        ?
+                        <Item.Image circular size='tiny' src={robot} />
+                        :
+                        (obj.first_name.endsWith('e' || 'f' || 'g' || 'h'))
+                        ?
+                        <Item.Image circular size='tiny' src={bigEye} />
+                        :
+                        (obj.first_name.endsWith('i' || 'j' || 'k' || 'l'))
+                        ?
+                        <Item.Image circular size='tiny' src={brain} />
+                        :
+                        (obj.first_name.endsWith('m' || 'n' || 'o' || 'p'))
+                        ?
+                        <Item.Image circular size='tiny' src={cactus} />
+                        :
+                        (obj.first_name.endsWith('q' || 'r' || 's'))
+                        ?
+                        <Item.Image circular size='tiny' src={orangeAlien} />
+                        :
+                        (obj.first_name.endsWith('u' || 'v' || 'w'))
+                        ?
+                        <Item.Image circular size='tiny' src={pinkAlien} />
+                        :
+                        <Item.Image circular size='tiny' src={spottedAlien} />
+                        } 
+                    {!obj.completed ?
+                    <Item.Content>
+                            <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
+                            <Item.Description>{obj.suggestion}</Item.Description>
+                            <Item.Extra>votes: {obj.votes}</Item.Extra>
+                            <Item.Extra><Icon size='big' name='circle' />
+                            <Button className='completed-button' floated='right' animated='vertical' onClick={() => this.completion(this.props.team.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>
+                            <Button.Content hidden><Icon color='green' name='checkmark' /></Button.Content>
+                        <Button.Content visible><Icon color='red' name='remove' /></Button.Content>
+                        </Button></Item.Extra>
+                        </Item.Content>
+                            :
+                            <Item.Content tertiary>
+                            <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
+                            <Item.Description>{obj.suggestion}</Item.Description>
+                            <Item.Extra>votes: {obj.votes}</Item.Extra>
+                            <Item.Extra><Icon size='big' color='green' name='check circle' />
+                        <Button className='completed-button' floated='right' animated='vertical' onClick={() => this.completion(this.props.team.completed_votes, obj.completed, obj.suggestion_id, obj.assigned_id, obj.votes)}>
+                        <Button.Content visible><Icon color='green' name='checkmark' /></Button.Content>
+                        <Button.Content hidden><Icon color='red' name='remove' /></Button.Content>
+                        </Button></Item.Extra>
+                        </Item.Content>}
+                        </Item>
             :
-            <div>
-            {!obj.completed ?
-                <div className="task_not_completed_div">
-                    <h1>{obj.suggestion}</h1>
-                    <h1>votes: {obj.votes}</h1>
-                    <h1>Is currently being worked on</h1>
-                </div>
-                :
-                <div className="task_completed_div">
-                    <h1>{obj.suggestion}</h1>
-                    <h1>votes: {obj.votes}</h1>
-                    <h1>Is completed</h1>
-                </div>
-            }
-        </div>
-        ))
-        let teamName = 
-            <div>
-                <h1>{this.props.team.team_name}</h1>
-                <h1>Completed votes: {this.props.team.completed_votes}</h1>
-            </div>
+            <Item>
+                        {(obj.first_name.endsWith('a' || 'b' || 'c' || 'd'))
+                        ?
+                        <Item.Image circular size='tiny' src={robot} />
+                        :
+                        (obj.first_name.endsWith('e' || 'f' || 'g' || 'h'))
+                        ?
+                        <Item.Image circular size='tiny' src={bigEye} />
+                        :
+                        (obj.first_name.endsWith('i' || 'j' || 'k' || 'l'))
+                        ?
+                        <Item.Image circular size='tiny' src={brain} />
+                        :
+                        (obj.first_name.endsWith('m' || 'n' || 'o' || 'p'))
+                        ?
+                        <Item.Image circular size='tiny' src={cactus} />
+                        :
+                        (obj.first_name.endsWith('q' || 'r' || 's'))
+                        ?
+                        <Item.Image circular size='tiny' src={orangeAlien} />
+                        :
+                        (obj.first_name.endsWith('u' || 'v' || 'w'))
+                        ?
+                        <Item.Image circular size='tiny' src={pinkAlien} />
+                        :
+                        <Item.Image circular size='tiny' src={spottedAlien} />
+                        } 
+                        {(!obj.completed) ?
+                            <Item.Content>
+                                <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
+                                <Item.Description>{obj.suggestion}</Item.Description>
+                                <Item.Extra>votes: {obj.votes}</Item.Extra>
+                                <Item.Extra>Is currently being worked on</Item.Extra>
+                                </Item.Content>
+                                :
+                
+                <Item.Content>
+                                <Item.Header>{obj.first_name} {obj.last_name}</Item.Header>
+                                <Item.Description>{obj.suggestion}</Item.Description>
+                                <Item.Extra>votes: {obj.votes}</Item.Extra>
+                                <Item.Extra>Is completed</Item.Extra>
+                </Item.Content>}
+
+                </Item>
+            ))
     
-        return (
+            let teamName =
             <div>
-                <Link to='/dashboard'><button>Back to Dashboard</button></Link>
-                {teamName}
-                {thisTeamSuggestions}
-            </div>
-        )
-    }
+                        <h1>{this.props.team.team_name}</h1>
+                        <h1>Completed votes: {this.props.team.completed_votes}</h1>
+                    </div>
 
-
-
-}
-
-
+                    return (
+            <div>
+                        <Link to='/dashboard'><button>Back to Dashboard</button></Link>
+                        {teamName}
+                            <Item.Group divided>
+                                {thisTeamSuggestions}
+                            </Item.Group>
+                    </div>
+                    )
+                }
+            
+            
+            
+            }
+            
+            
 function mapStateToProps(state) {
     return {
-        team: state.team,
-        teamSuggestions: state.teamSuggestions,
-        user: state.user
-    }
-}
-
-export default connect(mapStateToProps, { getTeam, getTeamSuggestions })(Team);
-
-
-
-
-
-
-
-
-//--------taskcompleted/notcompleted ---------
+                        team: state.team,
+                    teamSuggestions: state.teamSuggestions,
+                    user: state.user
+                }
+            }
+            
+export default connect(mapStateToProps, {getTeam, getTeamSuggestions })(Team);
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    //--------taskcompleted/notcompleted ---------
 // task(completed, id, assigned_id, votes) {
 //         axios.put(`/taskCompleted/${id}/${assigned_id}/${votes}/${!completed}`).then(res => {
 //             this.props.getTeamSuggestions(res.data)

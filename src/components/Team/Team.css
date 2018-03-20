@@ -4,3 +4,6 @@
 .task_not_completed_div {
     background: dodgerblue;
 }
+.completed-button {
+    margin-right: 15px !important;
+}
