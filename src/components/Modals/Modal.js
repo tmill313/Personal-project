@@ -63,10 +63,10 @@ export class ModalManager extends Component {
                     <Input fluid focus onChange={e => this.props.typingNewSuggestion(e.target.value)} onKeyPress={e => this.onKeyPress(e)}
                     action={{ color: 'red', icon: 'plus square outline', onClick:() => this.createSuggestion() }}
                     actionPosition='right'
-                    placeholder='Whatcha thinkin, Abe Lincoln?'/>
+                    placeholder='Type your killer suggestion here.'/>
                     {(remainingChar > 295)
                     ?
-                    <p className='encouragement'>You have 300 characters to convince us to institute Mocha-Frappe-Latte Fridays, every day of the week.</p>
+                    <p className='encouragement'>You have {remainingChar} characters to convince us to institute Mocha-Frappe-Latte Fridays, every day of the week.</p>
                     :
                     (remainingChar > 250)
                     ?
@@ -80,7 +80,7 @@ export class ModalManager extends Component {
                     ?
                     <p className='encouragement'>It's official.  You have made the world a better place.</p>
                     :
-                    <p className='encouragement'>You've got 10 more characters. Make 'em count.</p>
+                    <p className='encouragement'>You've got {remainingChar} more characters. Make 'em count.</p>
                     }
                 </Modal.Content>
                 </Modal>;

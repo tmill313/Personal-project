@@ -125,6 +125,14 @@
     width: 100%;
     z-index: 1000;
 }
+.sticky-pre-container {
+    width: 100vw;
+    height: 11vh;
+}
+.sticky-pre-image {
+    margin-right: 1.4vw !important;
+    margin-top: 1vh !important;
+}
 .sticky-post {
     position: fixed;
     width: 100%;
@@ -139,9 +147,12 @@
     justify-self: end;
 }
 .dash-header2 {
-    margin-right: 10px !important;
+    margin-right: 10.4px !important;
 }
 .header-logo1 {
     justify-self: center !important;
     grid-column: 2 / 3;
+}
+.header-pusher {
+    margin-bottom: 5vh !important;
 }

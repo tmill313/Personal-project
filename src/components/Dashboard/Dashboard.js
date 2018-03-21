@@ -93,11 +93,23 @@ class Dashboard extends Component {
             }
         };
         let teamsBox = this.props.teams.sort((a, b) => b.completed_votes - a.completed_votes).map((obj) => (
-            <Link to={`/Team/${obj.id}`} style={{ textDecoration: 'none' }}><div className="team-item">
-                <h5>{this.props.user ? obj.team_name : null}</h5>
-                <h5>{this.props.user ? obj.completed_votes : null}</h5>
-                {/* <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link> */}
-            </div></Link>
+            // <Link to={`/Team/${obj.id}`} style={{ textDecoration: 'none'}}>
+            <Item as={Link} to={`/Team/${obj.id}`}>
+            <Item.Image circular size='tiny' src={brain} />
+            <Item.Content>
+            <Item.Header as='h2' icon textAlign='center'>{obj.team_name}</Item.Header>
+              <Item.Description>
+                Completed votes: {obj.completed_votes}
+              </Item.Description>
+              <Item.Extra>{obj.team_name} is doin' the damn thing.</Item.Extra>
+            </Item.Content>
+          </Item>
+        //  <div className="team-item">
+        //        <h5>{this.props.user ? obj.team_name : null}</h5>
+        //        <h5>{this.props.user ? obj.completed_votes : null}</h5>
+        //        <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link>
+        //     </div>
+        //     </Link>
         ))
         if (this.props.suggestions.length > 0) {
             var suggBox = this.props.suggestions.sort((a, b) => b.votes - a.votes).map((obj) => (
@@ -314,38 +326,40 @@ class Dashboard extends Component {
             {this.state.calculations.pixelsPassed < 44
             ?
             <div className='sticky-pre'>
+            <div className='sticky-pre-container'>
                 <a href='http://localhost:3030/auth/logout'><Button icon><Icon color='red' name='left arrow' /></Button></a>
-                <div>
-                    <Header className='dash-header2'as='h2' icon textAlign='right'>
-                    {this.props.user.first_name ?
+                {this.props.user.first_name ?
                         (this.props.user.first_name.endsWith('a' || 'b' || 'c' || 'd'))
                                 ?
-                                <Item.Image circular size='large' src={robot} />
+                                <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={robot} />
                                 :
                                 (this.props.user.first_name.endsWith('e' || 'f' || 'g' || 'h'))
                                     ?
-                                    <Item.Image circular size='large' src={bigEye} />
+                                    <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={bigEye} />
                                     :
                                     (this.props.user.first_name.endsWith('i' || 'j' || 'k' || 'l'))
                                         ?
-                                        <Item.Image circular size='large' src={brain} />
+                                        <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={brain} />
                                         :
                                         (this.props.user.first_name.endsWith('m' || 'n' || 'o' || 'p'))
                                             ?
-                                            <Item.Image circular size='large' src={cactus} />
+                                            <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={cactus} />
                                             :
                                             (this.props.user.first_name.endsWith('q' || 'r' || 's'))
                                                 ?
-                                                <Item.Image circular size='large' src={orangeAlien} />
+                                                <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={orangeAlien} />
                                                 :
                                                 (this.props.user.first_name.endsWith('u' || 'v' || 'w'))
                                                     ?
-                                                    <Item.Image circular size='large' src={pinkAlien} />
+                                                    <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={pinkAlien} />
                                                     :
-                                                    <Item.Image circular size='large' src={spottedAlien} />
+                                                    <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={spottedAlien} />
                                                     :
                                                     null
                             }
+                </div>
+                <div>
+                    <Header className='dash-header2'as='h2' icon textAlign='right'>
                         <Header.Content>
                         {this.props.user ? this.props.user.first_name : null}
                             <br />
@@ -394,9 +408,23 @@ class Dashboard extends Component {
                         <Graph />
                     </div>
                     <div className="team-rankings">
+                    <Header className='header-pusher' as='h2' textAlign='center'>
+                    <Icon name='rocket' />
+                    <Header.Content>
+                    Team Rankings
+                    </Header.Content>
+                    </Header>
+                    <Item.Group divided>
                         {teamsBox}
+                        </Item.Group>
                     </div>
                     <div className="suggestion-rankings">
+                    <Header className='header-pusher' as='h2' textAlign='center'>
+                    <Icon name='tasks' />
+                    <Header.Content>
+                    Suggestions
+                    </Header.Content>
+                    </Header>
                         <Item.Group divided>
                             {suggBox}
                         </Item.Group>
