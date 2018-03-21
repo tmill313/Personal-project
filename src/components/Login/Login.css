@@ -20,6 +20,14 @@ body, html {
     display: grid;
     grid-template-columns: 50% 50%;
 }
+.toggled-login-header{
+    position: fixed;
+    height: 60px;
+    width: 100%;
+    background: #2E2946;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
 .header-list {
     display: inline-flex;
     justify-content: space-around;
@@ -115,4 +123,25 @@ h5 {
     font-size: 22px;
     line-height: 33px;
     font-family: myriad-pro, sans-serif;
+}
+h3 {
+    font-weight: 550;
+    font-size: 45px;
+    line-height: 57px;
+    font-family: myriad-pro, sans-serif;
+}
+.example-image {
+    grid-row: 2 / 4;
+    grid-column: 1 / 3;
+    height: 100%;
+    width: 75%;
+    margin-left: 25px;
+}
+.middle-text {
+    grid-column: 3 / 4;
+    grid-row: 2 / 4;
+    margin-right: 10px;
+    color: white;
+    margin-top: 24vh;
+    margin-right: 6vw;
 }

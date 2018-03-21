@@ -38,7 +38,7 @@ class Graph extends Component {
            data2: {
             labels: ["Q1", "Q2", "Q3", "Q4"],
             datasets: [{
-                label: 'Total completed votes',
+                label: 'Total completed votes by quarter',
                 data: [677, 567, 544, 3],
                 backgroundColor: [
                     'rgba(255, 89, 100, 0.2)',

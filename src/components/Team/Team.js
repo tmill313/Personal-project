@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux'
 import { getTeam, getTeamSuggestions } from '../ducks/reducer';
 import './Team.css'
-import { Button, Item, Label, Icon } from 'semantic-ui-react';
+import { Button, Item, Label, Icon, Header, Image } from 'semantic-ui-react';
 import robot from './Robot.svg';
 import bigEye from './big-eye.svg';
 import brain from './brain-alien.svg';
@@ -136,15 +136,25 @@ class Team extends Component {
                 </Item>
             ))
     
-            let teamName =
+            let teamName = (
             <div>
-                        <h1>{this.props.team.team_name}</h1>
-                        <h1>Completed votes: {this.props.team.completed_votes}</h1>
-                    </div>
+            <Header as='h2' icon textAlign='center'>
+            <Image circular size='massive' src={brain} />
+              <Header.Content>
+                {this.props.team.team_name}
+                <br />
+                Completed votes: {this.props.team.completed_votes}
+              </Header.Content>
+            </Header>
+          </div>
+        )
+                    //     <h1>{this.props.team.team_name}</h1>
+                    //     <h1>Completed votes: {this.props.team.completed_votes}</h1>
+                    // </div>
 
                     return (
             <div>
-                        <Link to='/dashboard'><button>Back to Dashboard</button></Link>
+                        <Link to='/dashboard'><Button icon><Icon color='red' name='left arrow' /></Button></Link>
                         {teamName}
                             <Item.Group divided>
                                 {thisTeamSuggestions}

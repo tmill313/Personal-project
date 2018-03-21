@@ -76,7 +76,11 @@ export class ModalManager extends Component {
                     ?
                     <p className='encouragement'>You are a wizard of words, my friend.</p>
                     :
+                    (remainingChar > 10)
+                    ?
                     <p className='encouragement'>It's official.  You have made the world a better place.</p>
+                    :
+                    <p className='encouragement'>You've got 10 more characters. Make 'em count.</p>
                     }
                 </Modal.Content>
                 </Modal>;

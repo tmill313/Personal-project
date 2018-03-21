@@ -120,3 +120,28 @@
     font-family: myriad-pro, sans-serif;
     color: gray;
 }
+.sticky-pre {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+.sticky-post {
+    position: fixed;
+    width: 100%;
+    background: white;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: 5vw 90vw 5vw; 
+}
+.upper-right-avatar {
+    margin-right: 25px !important;
+    margin-top: 10px !important;
+    justify-self: end;
+}
+.dash-header2 {
+    margin-right: 10px !important;
+}
+.header-logo1 {
+    justify-self: center !important;
+    grid-column: 2 / 3;
+}
