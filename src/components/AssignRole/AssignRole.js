@@ -65,6 +65,7 @@ export default class AssignRole extends Component {
         })
     }
     setUser() {
+        console.log(this.state.userID)
         axios.put(`/setUser/${this.state.userID}/${this.state.position}/${this.state.access}`).then(res => {
             this.setState({
                 toggle: true
@@ -113,7 +114,7 @@ export default class AssignRole extends Component {
                                     {' '}
                                 </div>
                                 <Image className='icon-image-executive' size='large' src={blueTeam} alt="blue-team" />
-                                <button className='sign-button'onClick={() => this.setUser()}>sign-in</button>
+                                <Button inverted color='red' size='small' className='sign-button'onClick={() => this.setUser()}>sign-in</Button>
                                 </div>
                             </div>
                             :
@@ -136,7 +137,7 @@ export default class AssignRole extends Component {
                                     {' '}
                                 </div>
                                 <Image className='icon-image-executive' size='large' src={blueTeam} alt="blue-team" />
-                                <button className='sign-button'onClick={() => this.setUser()}>sign-in</button>
+                                <Button inverted color='red' size='small' className='sign-button'onClick={() => this.setUser()}>sign-in</Button>
                                 </div>
                                 </div>
                                 :

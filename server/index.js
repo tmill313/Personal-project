@@ -69,10 +69,22 @@ passport.deserializeUser( (id, done) => {
 })
 
 app.get('/auth', passport.authenticate('auth0'));
-app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: process.env.HOMEPAGE
-}))
+app.get('/auth/callback', passport.authenticate('auth0'), function(req, res) {
+    const db= req.app.get('db');
+    console.log('something',req.user)
+    db.getUser(req.user).then(user => {
+        if(user[0].access) {
+            res.redirect('/#/dashboard')
+        } else {
+            res.redirect('/#/assignrole')
+        }
+    })
+}
+// {
+//     successRedirect: process.env.SUCCESS_REDIRECT,
+//     failureRedirect: process.env.HOMEPAGE
+// }
+)
 app.get('/auth/me', (req, res) => {
     if(req.user) {
         res.status(200).send(req.user)
