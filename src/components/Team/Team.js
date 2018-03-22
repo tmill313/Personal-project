@@ -12,6 +12,9 @@ import cactus from './cactus.svg';
 import orangeAlien from './orange-alien.svg';
 import pinkAlien from './pink-alien.svg';
 import spottedAlien from './spotted-alien.svg';
+import crashTest from './Crash tes dummies.svg';
+import brogrammers from './Brogrammers.svg';
+import sqlInjection from './SQL injection.svg';
 
 
 class Team extends Component {
@@ -139,7 +142,20 @@ class Team extends Component {
             let teamName = (
             <div>
             <Header as='h2' icon textAlign='center'>
+            {this.props.team.id === 2
+            ?
+            <Image circular size='massive' src={sqlInjection} />
+            :
+            this.props.team.id === 3
+            ?
+            <Image circular size='massive' src={brogrammers} />
+            :
+            this.props.team.id === 4
+            ?
+            <Image circular size='massive' src={crashTest} />
+            :
             <Image circular size='massive' src={brain} />
+            }
               <Header.Content>
                 {this.props.team.team_name}
                 <br />

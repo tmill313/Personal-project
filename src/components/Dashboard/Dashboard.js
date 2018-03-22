@@ -17,6 +17,9 @@ import orangeAlien from './orange-alien.svg';
 import pinkAlien from './pink-alien.svg';
 import spottedAlien from './spotted-alien.svg';
 import blackLogo from './black-logo.svg';
+import crashTest from './Crash tes dummies.svg';
+import brogrammers from './Brogrammers.svg';
+import sqlInjection from './SQL injection.svg';
 
 
 class Dashboard extends Component {
@@ -95,7 +98,20 @@ class Dashboard extends Component {
         let teamsBox = this.props.teams.sort((a, b) => b.completed_votes - a.completed_votes).map((obj) => (
             // <Link to={`/Team/${obj.id}`} style={{ textDecoration: 'none'}}>
             <Item as={Link} to={`/Team/${obj.id}`}>
+            {obj.id === 2
+            ?
+            <Item.Image circular size='tiny' src={sqlInjection} />
+            :
+            obj.id === 3
+            ?
+            <Item.Image circular size='tiny' src={brogrammers} />
+            :
+            obj.id === 4
+            ?
+            <Item.Image circular size='tiny' src={crashTest} />
+            :
             <Item.Image circular size='tiny' src={brain} />
+            }
             <Item.Content>
             <Item.Header as='h2' icon textAlign='center'>{obj.team_name}</Item.Header>
               <Item.Description>

@@ -4,7 +4,12 @@ import { Redirect, Link } from 'react-router-dom';
 import teamMember from './team-member_1.svg';
 import manager from './Manager.svg';
 import executive from './Executive.svg';
-import { Image, Header, Dropdown} from 'semantic-ui-react';
+import redTeam from './red-team.svg';
+import blueTeam from './blue-team.svg';
+import crashTest from './Crash tes dummies.svg';
+import brogrammers from './Brogrammers.svg';
+import sqlInjection from './SQL injection.svg';
+import { Button, Image, Header, Dropdown} from 'semantic-ui-react';
 import './AssignRole.css'
 
 export default class AssignRole extends Component {
@@ -77,9 +82,12 @@ export default class AssignRole extends Component {
 
     render() {
         const options = [
-            { key: 2, text: 'Front-end Fighters', value: 2 },
-            { key: 3, text: 'The BROgrammers', value: 3 },
-            { key: 4, text: 'Crash Test Dummies', value: 4 },
+            { key: 2, text: 'The SQL Injectors', value: 2,
+            content: <Header image={sqlInjection} content='The SQL Injectors' subheader="Cashin' checks & snappin' knecks" /> },
+            { key: 3, text: 'The BROgrammers', value: 3,
+            content: <Header image={brogrammers} content='The BROgrammers' subheader="One time we wrestled a giraffe to the ground with our bare hands." /> },
+            { key: 4, text: 'The Crash Test Dummies', value: 4,
+            content: <Header image={crashTest} content='The Crash Test Dummies' subheader="You and your mom are hillbillies. This is a house of learned doctors." /> },
           ]
         if (this.state.accessAssigned) {
             return <Redirect to='/dashboard' />
@@ -98,12 +106,14 @@ export default class AssignRole extends Component {
                                     </Header>
                                 </div>
                                 <div className='icon-holder'>
-                                <div>
+                                <Image className='icon-image-team' size='large' src={redTeam} alt="red-team" />
+                                <div className='icon-image-dropdown'>
                                     I run with{' '}
-                                    <Dropdown onChange={this.handleChange} inline options={options} defaultValue='2' />
-                                    {' '}.
+                                    <Dropdown onChange={this.handleChange} inline options={options} defaultValue={options[0].value} />
+                                    {' '}
                                 </div>
-                                <button onClick={() => this.setUser()}>sign-in</button>
+                                <Image className='icon-image-executive' size='large' src={blueTeam} alt="blue-team" />
+                                <button className='sign-button'onClick={() => this.setUser()}>sign-in</button>
                                 </div>
                             </div>
                             :
@@ -119,13 +129,15 @@ export default class AssignRole extends Component {
                                         </Header>
                                     </div>
                                     <div className='icon-holder'>
-                                    <div>
+                                    <Image className='icon-image-team' size='large' src={redTeam} alt="red-team" />
+                                <div className='icon-image-dropdown'>
                                     I run with{' '}
-                                    <Dropdown onChange={this.handleChange} inline options={options} defaultValue='2' />
-                                    {' '}.
+                                    <Dropdown onChange={this.handleChange} inline options={options} defaultValue={options[0].value} />
+                                    {' '}
                                 </div>
-                                <button onClick={() => this.setUser()}>sign-in</button>
-                                    </div>
+                                <Image className='icon-image-executive' size='large' src={blueTeam} alt="blue-team" />
+                                <button className='sign-button'onClick={() => this.setUser()}>sign-in</button>
+                                </div>
                                 </div>
                                 :
                                 this.state.position === "Executive" ?
@@ -139,18 +151,20 @@ export default class AssignRole extends Component {
                                             </Header>
                                         </div>
                                         <div className='icon-holder'>
-                                        <div>
+                                        <Image className='icon-image-red' size='large' src={redTeam} alt="red-team" />
+                                <div className='icon-image-dropdown'>
                                     I run with{' '}
-                                    <Dropdown onChange={this.handleChange} inline options={options} defaultValue='2' />
-                                    {' '}.
+                                    <Dropdown onChange={this.handleChange} inline options={options} defaultValue={options[0].value} />
+                                    {' '}
                                 </div>
-                                <button onClick={() => this.setUser()}>sign-in</button>
-                                        </div>
+                                <Image className='icon-image-blue' size='large' src={blueTeam} alt="blue-team" />
+                                <Button inverted color='red' size='small' className='sign-button'onClick={() => this.setUser()}>sign-in</Button>
+                                </div>
                                     </div>
                                     :
                                     <div>
                                         <div className='header-text'>
-                                            <Header size='huge' as='h1' textAlign='center'>
+                                            <Header className='role-header'size='huge' as='h1' textAlign='center'>
                                                 What is your role?
                                         </Header>
                                         </div>
