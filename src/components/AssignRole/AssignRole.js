@@ -102,7 +102,7 @@ export default class AssignRole extends Component {
                                     <Header as='h2' icon textAlign='center'>
                                         <Image size='massive' src={teamMember} circular />
                                         <Header.Content>
-                                            Whose your squad?
+                                            Who's your squad?
                                         </Header.Content>
                                     </Header>
                                 </div>
@@ -125,7 +125,7 @@ export default class AssignRole extends Component {
                                             <Image size='massive' src={manager} circular />
                                             <br />
                                             <Header.Content>
-                                                Whose your squad?
+                                                Who's your squad?
                                         </Header.Content>
                                         </Header>
                                     </div>
@@ -147,7 +147,7 @@ export default class AssignRole extends Component {
                                             <Header as='h2' icon textAlign='center'>
                                                 <Image size='massive' src={executive} circular />
                                                 <Header.Content>
-                                                    Whose your squad?
+                                                    Who's your squad?
                                         </Header.Content>
                                             </Header>
                                         </div>
