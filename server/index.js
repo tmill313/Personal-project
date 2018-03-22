@@ -22,6 +22,9 @@ const {
 
 
 const app = express();
+
+app.use(express.static(`${__dirname}/../build`))
+
 app.use(bodyParser.json())
 
 massive(CONNECTION_STRING).then(db => {app.set('db', db);})
@@ -67,8 +70,8 @@ passport.deserializeUser( (id, done) => {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/assignrole',
-    failureRedirect: 'http://localhost:3000'
+    successRedirect: process.env.SUCCESS_REDIRECT,
+    failureRedirect: process.env.HOMEPAGE
 }))
 app.get('/auth/me', (req, res) => {
     if(req.user) {
@@ -99,7 +102,7 @@ app.put('/completion/:id/:assigned_id/:votes/:completed/:completed_votes', ctrl.
 
 app.get('/auth/logout', (req, res) => {
     req.logOut();
-    res.redirect('http://localhost:3000/')
+    res.redirect(process.env.HOMEPAGE)
 })
 
 

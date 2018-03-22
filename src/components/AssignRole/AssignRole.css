@@ -3,7 +3,7 @@
     height: 88vh;
     display: grid;
     grid-template-columns: 5vw 25vw 7.5vw 25vw 7.5vw 25vw 5vw;
-    grid-template-rows: 0vh 8vh 11vh 40vh 20vh;
+    grid-template-rows: 10vh 1vh 11vh 40vh 20vh;
 }
 
 .icon-tag-team {
@@ -58,7 +58,7 @@
     justify-self: center;
 }
 .role-header {
-    margin-top: 35px !important;
+    padding-top: 5vh !important;
 }
 .icon-image-red {
     width: 100%;

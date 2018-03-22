@@ -343,7 +343,7 @@ class Dashboard extends Component {
             ?
             <div className='sticky-pre'>
             <div className='sticky-pre-container'>
-                <a href='http://localhost:3030/auth/logout'><Button icon><Icon color='red' name='left arrow' /></Button></a>
+                <a href={process.env.REACT_APP_LOGOUT}><Button icon><Icon color='red' name='left arrow' /></Button></a>
                 {this.props.user.first_name ?
                         (this.props.user.first_name.endsWith('a' || 'b' || 'c' || 'd'))
                                 ?
@@ -386,7 +386,7 @@ class Dashboard extends Component {
                 </div>
                 :
                 <div className='sticky-post'>
-                <a href='http://localhost:3030/auth/logout'><Button icon><Icon color='red' name='left arrow' /></Button></a>
+                <a href={process.env.REACT_APP_LOGOUT}><Button icon><Icon color='red' name='left arrow' /></Button></a>
                 <Item.Image className='header-logo1' size='small' src={blackLogo} />
                     {this.props.user.first_name ?
                         (this.props.user.first_name.endsWith('a' || 'b' || 'c' || 'd'))
