@@ -93,6 +93,7 @@
     height: 45px;
     width: 45px;
     position: none;
+    margin-right: 2vw !important;
 }
 .suggested-user {
     grid-column: 1 / 2;
@@ -150,6 +151,7 @@
     justify-self: end;
 }
 .dash-header2 {
+    margin-top: 3vh !important;
     margin-right: 10.4px !important;
 }
 .header-logo1 {

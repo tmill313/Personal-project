@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from "react-redux";
 import { Modal, Input, Grid, Icon, Button, Transition, Image } from "semantic-ui-react";
-import iconImage from './Asset 4.svg';
+import iconImage from './Asset 5.svg';
 import { closeModal, typingNewSuggestion, getSuggestions, getUser } from "../ducks/reducer";
 import './Modal.css'
 
