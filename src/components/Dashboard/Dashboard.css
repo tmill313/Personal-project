@@ -36,6 +36,8 @@
     flex-direction: column;
     height: auto;
     margin-top: 88px;
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
 }
 .team-item {
     display: grid;
@@ -51,6 +53,8 @@
     flex-direction: column;
     height: auto;
     margin-top: 88px;
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
 }
 .suggestion-item {
     display: grid;
@@ -89,7 +93,6 @@
     height: 45px;
     width: 45px;
     position: none;
-    margin-right: 85px !important;
 }
 .suggested-user {
     grid-column: 1 / 2;
@@ -155,4 +158,7 @@
 }
 .header-pusher {
     margin-bottom: 5vh !important;
+}
+.avatar-image {
+    padding-left: 2vw !important;
 }

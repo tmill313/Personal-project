@@ -7,8 +7,8 @@ import executive from './Executive.svg';
 import redTeam from './red-team.svg';
 import blueTeam from './blue-team.svg';
 import crashTest from './Crash tes dummies.svg';
-import brogrammers from './Brogrammers.svg';
-import sqlInjection from './SQL injection.svg';
+import brogrammers from './new-bro.svg';
+import sqlInjection from './new-sql.svg';
 import { Button, Image, Header, Dropdown} from 'semantic-ui-react';
 import './AssignRole.css'
 

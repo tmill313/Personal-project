@@ -16,10 +16,10 @@ import cactus from './cactus.svg';
 import orangeAlien from './orange-alien.svg';
 import pinkAlien from './pink-alien.svg';
 import spottedAlien from './spotted-alien.svg';
-import blackLogo from './black-logo.svg';
+import blackLogo from './new-black-logo.svg';
 import crashTest from './Crash tes dummies.svg';
-import brogrammers from './Brogrammers.svg';
-import sqlInjection from './SQL injection.svg';
+import brogrammers from './new-bro.svg';
+import sqlInjection from './new-sql.svg';
 
 
 class Dashboard extends Component {

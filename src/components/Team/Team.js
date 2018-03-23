@@ -13,8 +13,8 @@ import orangeAlien from './orange-alien.svg';
 import pinkAlien from './pink-alien.svg';
 import spottedAlien from './spotted-alien.svg';
 import crashTest from './Crash tes dummies.svg';
-import brogrammers from './Brogrammers.svg';
-import sqlInjection from './SQL injection.svg';
+import brogrammers from './new-bro.svg';
+import sqlInjection from './new-sql.svg';
 
 
 class Team extends Component {
@@ -61,13 +61,13 @@ class Team extends Component {
                         :
                         (obj.first_name.endsWith('q' || 'r' || 's'))
                         ?
-                        <Item.Image circular size='tiny' src={orangeAlien} />
+                        <Item.Image ircular size='tiny' src={orangeAlien} />
                         :
                         (obj.first_name.endsWith('u' || 'v' || 'w'))
                         ?
                         <Item.Image circular size='tiny' src={pinkAlien} />
                         :
-                        <Item.Image circular size='tiny' src={spottedAlien} />
+                        <Item.Image ircular size='tiny' src={spottedAlien} />
                         } 
                     {!obj.completed ?
                     <Item.Content>
@@ -172,7 +172,7 @@ class Team extends Component {
             <div>
                         <Link to='/dashboard'><Button icon><Icon color='red' name='left arrow' /></Button></Link>
                         {teamName}
-                            <Item.Group divided>
+                            <Item.Group className='team-sugg-div'divided>
                                 {thisTeamSuggestions}
                             </Item.Group>
                     </div>

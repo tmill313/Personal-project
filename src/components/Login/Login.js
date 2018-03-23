@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css'
-import suggestionLogo from './sugg-logo-2.svg'
+import suggestionLogo from './new-white-logo.svg'
 import exampleImage from './example-image.svg'
 import {Visibility} from 'semantic-ui-react';
 
