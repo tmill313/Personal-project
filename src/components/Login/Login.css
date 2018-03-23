@@ -125,9 +125,9 @@ h5 {
     font-family: myriad-pro, sans-serif;
 }
 h3 {
-    font-weight: 550;
+    font-weight: 4000;
     font-size: 45px;
-    line-height: 57px;
+    line-height: 44px;
     font-family: myriad-pro, sans-serif;
 }
 .example-image {
@@ -144,4 +144,8 @@ h3 {
     color: white;
     margin-top: 24vh;
     margin-right: 6vw;
+}
+
+.learn-more-button {
+    margin-top: 4vh !important;
 }

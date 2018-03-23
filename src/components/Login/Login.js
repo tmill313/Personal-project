@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css'
 import suggestionLogo from './new-white-logo.svg'
-import exampleImage from './example-image.svg'
-import {Visibility} from 'semantic-ui-react';
+import exampleImage from './new-screenshot2.svg'
+import {Image, Visibility, Button} from 'semantic-ui-react';
 
 export default class Login extends Component {
     constructor() {
@@ -70,6 +70,7 @@ export default class Login extends Component {
                         <br />
                         who just happen to be your employees.
                     </h3>
+                    <Button className='learn-more-button' inverted>Learn more</Button>
                 </div>
                 </section>
                 <section className="section"></section>
