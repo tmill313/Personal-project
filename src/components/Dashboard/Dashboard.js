@@ -6,7 +6,7 @@ import { getTeams, getUser, getSuggestions, openModal } from '../ducks/reducer';
 import Graph from '../charts/Graph';
 import './Dashboard.css'
 import addSuggestion1 from './Asset 6.svg'
-import { Image, Button, Segment, Item, Label, Icon, Header, Visibility } from 'semantic-ui-react';
+import { Image, Button, Segment, Item, Label, Icon, Header, Visibility, Dropdown } from 'semantic-ui-react';
 import ModalManager from '../Modals/Modal';
 import suggestionLogo from './sugg-logo-2.svg';
 import robot from './Robot.svg';
@@ -20,6 +20,7 @@ import blackLogo from './new-black-logo.svg';
 import crashTest from './Crash tes dummies.svg';
 import brogrammers from './new-bro.svg';
 import sqlInjection from './new-sql.svg';
+import { Steps, Hints } from 'intro.js-react';
 
 
 class Dashboard extends Component {
@@ -34,10 +35,53 @@ class Dashboard extends Component {
             open: false,
             calculations: {
                 pixelsPassed: 0
+            },
+            stepsEnabled: true,
+            initialStep: 0,
+            steps: [
+                {
+                    element: '.graph-wrapper',
+                    intro: 'See a birds-eye view of how many votes your teams have completed with these graphs & charts.',
+                    tooltipClass: 'myTooltipClass',
+                    highlightClass: 'myHighlightClass'
+                },
+                {
+                    element: '.team-rankings',
+                    intro: 'See who is leading the way with the team rankings!',
+                    tooltipClass: 'myTooltipClass',
+                    highlightClass: 'myHighlightClass'
+                },
+                {
+                    element: '.dummy-item',
+                    intro: 'Do the work that matters.  Vote on suggestions you think make the biggest difference & grab the ones your team can crush',
+                    tooltipClass: 'myTooltipClass',
+                    highlightClass: 'myHighlightClass',
+                    scrollPadding: 100
+                },
+                {
+                element: '.like-button1',
+                intro: 'Think this idea will make the workplace better?  Add some points to it here.',
+                tooltipClass: 'myTooltipClass',
+                highlightClass: 'myHighlightClass'
+            },
+            {
+                element: '.commit-button1',
+                intro: 'If a suggestion is right up your teams alley, commit it to your team.',
+                tooltipClass: 'myTooltipClass',
+                highlightClass: 'myHighlightClass'
+            },
+            {
+                element: '.add-suggestion',
+                intro: 'Got an idea?  Click here at any time to share your suggestion.',
+                tooltipClass: 'myTooltipClass',
+                highlightClass: 'myHighlightClass'
             }
+            ],
+
 
 
         }
+        this.onExit=this.onExit.bind(this)
     }
 
     componentDidMount() {
@@ -62,6 +106,15 @@ class Dashboard extends Component {
             })
         }
     }
+    onExit = () => {
+        this.setState(() => ({ stepsEnabled: false }));
+        let body = {user_id: this.state.user.user_id}
+        axios.put('/tutorial', body).then(  () => {
+            axios.get('/auth/me').then(res => {
+                this.props.getUser(res.data)
+            })
+        })
+      };
 
     deleteSuggestion(id) {
         axios.delete(`/delete/${id}`).then(res => {
@@ -89,6 +142,7 @@ class Dashboard extends Component {
 
 
     render() {
+        const { stepsEnabled, steps, initialStep, hintsEnabled, hints } = this.state;
         console.log(this.state.calculations.pixelsPassed)
         const inlineStyle = {
             segment: {
@@ -98,34 +152,34 @@ class Dashboard extends Component {
         let teamsBox = this.props.teams.sort((a, b) => b.completed_votes - a.completed_votes).map((obj) => (
             // <Link to={`/Team/${obj.id}`} style={{ textDecoration: 'none'}}>
             <Item as={Link} to={`/Team/${obj.id}`}>
-            {obj.id === 2
-            ?
-            <Item.Image circular size='tiny' src={sqlInjection} />
-            :
-            obj.id === 3
-            ?
-            <Item.Image circular size='tiny' src={brogrammers} />
-            :
-            obj.id === 4
-            ?
-            <Item.Image circular size='tiny' src={crashTest} />
-            :
-            <Item.Image circular size='tiny' src={brain} />
-            }
-            <Item.Content>
-            <Item.Header as='h2' icon textAlign='center'>{obj.team_name}</Item.Header>
-              <Item.Description>
-                Completed votes: {obj.completed_votes}
-              </Item.Description>
-              <Item.Extra>{obj.team_name} is doin' the damn thing.</Item.Extra>
-            </Item.Content>
-          </Item>
-        //  <div className="team-item">
-        //        <h5>{this.props.user ? obj.team_name : null}</h5>
-        //        <h5>{this.props.user ? obj.completed_votes : null}</h5>
-        //        <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link>
-        //     </div>
-        //     </Link>
+                {obj.id === 2
+                    ?
+                    <Item.Image circular size='tiny' src={sqlInjection} />
+                    :
+                    obj.id === 3
+                        ?
+                        <Item.Image circular size='tiny' src={brogrammers} />
+                        :
+                        obj.id === 4
+                            ?
+                            <Item.Image circular size='tiny' src={crashTest} />
+                            :
+                            <Item.Image circular size='tiny' src={brain} />
+                }
+                <Item.Content>
+                    <Item.Header as='h2' icon textAlign='center'>{obj.team_name}</Item.Header>
+                    <Item.Description>
+                        Completed votes: {obj.completed_votes}
+                    </Item.Description>
+                    <Item.Extra>{obj.team_name} is doin' the damn thing.</Item.Extra>
+                </Item.Content>
+            </Item>
+            //  <div className="team-item">
+            //        <h5>{this.props.user ? obj.team_name : null}</h5>
+            //        <h5>{this.props.user ? obj.completed_votes : null}</h5>
+            //        <Link to={`/Team/${obj.id}`}><button>TEAM VIEW</button></Link>
+            //     </div>
+            //     </Link>
         ))
         if (this.props.suggestions.length > 0) {
             var suggBox = this.props.suggestions.sort((a, b) => b.votes - a.votes).map((obj) => (
@@ -337,111 +391,124 @@ class Dashboard extends Component {
                         </Item>
             ))
         }
-        return (
-            <Visibility onUpdate={this.handleUpdate}>
-            {this.state.calculations.pixelsPassed < 44
-            ?
-            <div className='sticky-pre'>
-            <div className='sticky-pre-container'>
-                <a href={process.env.REACT_APP_LOGOUT}><Button icon><Icon color='red' name='left arrow' /></Button></a>
-                {this.props.user.first_name ?
-                        (this.props.user.first_name.endsWith('a' || 'b' || 'c' || 'd'))
+        var trigger = ''
+        {
+            this.props.user.first_name ?
+                (this.props.user.first_name.endsWith('a' || 'b' || 'c' || 'd'))
+                    ?
+                    trigger = <span className='name-span'><Image className='upper-right-avatar' avatar floated='right' src={robot} />{this.props.user.first_name} {this.props.user.last_name}</span>
+                    :
+                    (this.props.user.first_name.endsWith('e' || 'f' || '' || 'h'))
+                        ?
+                        trigger = <span className='name-span'><Image className='upper-right-avatar' avatar floated='right' src={bigEye} />{this.props.user.first_name} {this.props.user.last_name}</span>
+                        :
+                        (this.props.user.first_name.endsWith('i' || 'j' || 'k' || 'l'))
+                            ?
+                            trigger = <span className='name-span'><Image className='upper-right-avatar' avatar floated='right' src={brain} />{this.props.user.first_name} {this.props.user.last_name}</span>
+                            :
+                            (this.props.user.first_name.endsWith('m' || 'n' || 'o' || 'p'))
                                 ?
-                                <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={robot} />
+                                trigger = <span className='name-span'><Image className='upper-right-avatar' avatar floated='right' src={cactus} />{this.props.user.first_name} {this.props.user.last_name}</span>
                                 :
-                                (this.props.user.first_name.endsWith('e' || 'f' || 'g' || 'h'))
+                                (this.props.user.first_name.endsWith('q' || 'r' || 's'))
                                     ?
-                                    <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={bigEye} />
+                                    trigger = <span className='name-span'><Image className='upper-right-avatar' avatar floated='right' src={orangeAlien} />{this.props.user.first_name} {this.props.user.last_name}</span>
                                     :
-                                    (this.props.user.first_name.endsWith('i' || 'j' || 'k' || 'l'))
+                                    (this.props.user.first_name.endsWith('u' || 'v' || 'w'))
                                         ?
-                                        <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={brain} />
+                                        trigger = <span className='name-span'><Image className='upper-right-avatar' avatar floated='right' src={pinkAlien} />{this.props.user.first_name} {this.props.user.last_name}</span>
                                         :
-                                        (this.props.user.first_name.endsWith('m' || 'n' || 'o' || 'p'))
-                                            ?
-                                            <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={cactus} />
-                                            :
-                                            (this.props.user.first_name.endsWith('q' || 'r' || 's'))
-                                                ?
-                                                <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={orangeAlien} />
-                                                :
-                                                (this.props.user.first_name.endsWith('u' || 'v' || 'w'))
-                                                    ?
-                                                    <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={pinkAlien} />
-                                                    :
-                                                    <Item.Image className='sticky-pre-image' floated='right' circular size='tiny' src={spottedAlien} />
-                                                    :
-                                                    null
-                            }
-                </div>
-                <div>
-                    <Header className='dash-header2'as='h2' icon textAlign='right'>
-                        <Header.Content>
-                        {this.props.user ? this.props.user.first_name : null}
-                            <br />
-                            {this.props.user ? this.props.user.last_name : null}
-                        </Header.Content>
-                    </Header>
-                </div>
-                </div>
+                                        trigger = <span className='name-span'><Image className='upper-right-avatar' avatar floated='right' src={spottedAlien} />{this.props.user.first_name} {this.props.user.last_name}</span>
                 :
-                <div className='sticky-post'>
-                <a href={process.env.REACT_APP_LOGOUT}><Button icon><Icon color='red' name='left arrow' /></Button></a>
-                <Item.Image className='header-logo1' size='small' src={blackLogo} />
-                    {this.props.user.first_name ?
-                        (this.props.user.first_name.endsWith('a' || 'b' || 'c' || 'd'))
-                                ?
-                                <Item.Image className='upper-right-avatar' circular floated='right' size='mini' src={robot} />
-                                :
-                                (this.props.user.first_name.endsWith('e' || 'f' || 'g' || 'h'))
-                                    ?
-                                    <Item.Image className='upper-right-avatar'floated='right' circular size='mini' src={bigEye} />
-                                    :
-                                    (this.props.user.first_name.endsWith('i' || 'j' || 'k' || 'l'))
-                                        ?
-                                        <Item.Image className='upper-right-avatar'floated='right' circular size='mini' src={brain} />
-                                        :
-                                        (this.props.user.first_name.endsWith('m' || 'n' || 'o' || 'p'))
-                                            ?
-                                            <Item.Image className='upper-right-avatar'floated='right' circular size='mini' src={cactus} />
-                                            :
-                                            (this.props.user.first_name.endsWith('q' || 'r' || 's'))
-                                                ?
-                                                <Item.Image className='upper-right-avatar'floated='right' circular size='mini' src={orangeAlien} />
-                                                :
-                                                (this.props.user.first_name.endsWith('u' || 'v' || 'w'))
-                                                    ?
-                                                    <Item.Image className='upper-right-avatar'floated='right' circular size='mini' src={pinkAlien} />
-                                                    :
-                                                    <Item.Image className='upper-right-avatar'floated='right' circular size='mini' src={spottedAlien} />
-                                                    :
-                                                    null
-                            }
-                </div>}
+                null
+
+        }
+        var tut = ''
+        var dummyItem = ''
+        {this.props.user.first_name
+            ?
+            this.props.user.tutorial !== true
+            ?
+           tut = <Steps
+            enabled={stepsEnabled}
+            steps={steps}
+            initialStep={initialStep}
+            onExit={this.onExit}
+        />
+            :
+           tut = null
+        : null}
+        {this.props.user.first_name
+            ?
+            this.props.user.tutorial !== true
+            ?
+            dummyItem = <Item className='dummy-item'>
+            <Item.Image circular size='tiny' src={robot} />
+            <Item.Content>
+                <Item.Header>Taylor Miller</Item.Header>
+                <Item.Description className='item-description'>I think everyone should use SuggestionBox!</Item.Description>
+                <Item.Extra className='item-extra'>
+                    assigned to - The BROgrammers
+                </Item.Extra>
+                <Item.Extra>
+                    <Button floated='right' className="delete-button" icon='remove'></Button>
+                    <Button className="like-button1" as='div' labelPosition='right'>
+                                                        <Button color='red' animated='vertical'>
+                                                            <Button.Content hidden>
+                                                                <Icon name='arrow up' />
+                                                            </Button.Content>
+                                                            <Button.Content visible>
+                                                                <Icon name='empty heart' />
+                                                            </Button.Content>
+                                                        </Button>
+                                                        <Label as='a' basic color='red' pointing='left'>100</Label>
+                                                    </Button>
+                                        <Button className="commit-button1">commit</Button>
+                                    </Item.Extra>
+                                </Item.Content>
+            </Item>
+            :
+           dummyItem = null
+        : null}
+        return (
+            <div onUpdate={this.handleUpdate}>
+                {tut}
+                <Header className='dash-header2' as='p' icon textAlign='right'>
+                    <div className='upper-right'>
+                        <Image floated='left' size='medium' className='header-logo1' src={blackLogo} />
+                        <Dropdown trigger={trigger} direction='left' pointing='top right' icon={null} >
+                            <Dropdown.Menu>
+                            <Dropdown.Item className='drop-item' text='logout' iconSize='tiny' />
+                                <a href={process.env.REACT_APP_LOGOUT}><Dropdown.Item className='drop-item' icon='sign out' iconSize='tiny' /></a>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+                </Header>
                 <div className="dash-main-container">
                     <div className='header-filler'></div>
                     <div className="graph-wrapper">
                         <Graph />
                     </div>
                     <div className="team-rankings">
-                    <Header className='header-pusher' as='h2' textAlign='center'>
-                    <Icon name='rocket' />
-                    <Header.Content>
-                    Team Rankings
+                        <Header className='header-pusher' as='h2' textAlign='center'>
+                            <Icon name='rocket' />
+                            <Header.Content>
+                                Team Rankings
                     </Header.Content>
-                    </Header>
-                    <Item.Group divided>
-                        {teamsBox}
+                        </Header>
+                        <Item.Group divided>
+                            {teamsBox}
                         </Item.Group>
                     </div>
                     <div className="suggestion-rankings">
-                    <Header className='header-pusher' as='h2' textAlign='center'>
-                    <Icon name='tasks' />
-                    <Header.Content>
-                    Suggestions
+                        <Header className='header-pusher' as='h2' textAlign='center'>
+                            <Icon name='tasks' />
+                            <Header.Content>
+                                Suggestions
                     </Header.Content>
-                    </Header>
+                        </Header>
                         <Item.Group divided>
+                        {dummyItem}
                             {suggBox}
                         </Item.Group>
                     </div>
@@ -456,11 +523,9 @@ class Dashboard extends Component {
                 <div className="modal-holder">
                     <ModalManager />
                 </div>
-            </Visibility>
+            </div>
         )
     }
-
-
 
 }
 

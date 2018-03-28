@@ -95,7 +95,7 @@ export default class AssignRole extends Component {
         } else {
             if (!this.state.toggle) {
                 return (
-                    <div>
+                    <div className='main-container'>
                         {this.state.position === "Team Member" ?
                             <div>
                                 <div>
@@ -174,6 +174,7 @@ export default class AssignRole extends Component {
                                             <Image className='icon-image-team' size='large' onClick={() => this.clickTeamMember(1)} src={teamMember} alt="team-member" />
                                             <h3 className='icon-tag-manager'>Manager</h3>
                                             <Image className='icon-image-manager' size='large' onClick={() => this.clickManager(2)} src={manager} alt="manager" />
+
                                             <h3 className='icon-tag-executive'>Executive</h3>
                                             <Image className='icon-image-executive' size='large' onClick={() => this.clickExecutive(3)} src={executive} alt="executive" />
                                         </div>

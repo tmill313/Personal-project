@@ -10,6 +10,7 @@
     justify-self: center;
     grid-row: 3 / 4;
     grid-column: 2 / 3;
+    font-size: 30px !important;
 }
 .icon-image-team {
     width: 100%;
@@ -23,6 +24,7 @@
     justify-self: center;
     grid-row: 3 / 4;
     grid-column: 4 / 5;
+    font-size: 30px !important;
 }
 .icon-image-manager {
     width: 100%;
@@ -36,6 +38,7 @@
     justify-self: center;
     grid-row: 3 / 4;
     grid-column: 6 / 7;
+    font-size: 30px !important;
 }
 .icon-image-executive {
     width: 100%;
@@ -48,6 +51,7 @@
     justify-content: center;
     width: 100vw;
     height: 73px;
+    font-size: 25px !important;
 }
 .sign-button{
     grid-column: 4 / 5;

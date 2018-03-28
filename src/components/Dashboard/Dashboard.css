@@ -20,9 +20,15 @@
     color: white;
 }
 .dash-main-container {
+    background-color: #EEEEEE;
+    padding-bottom: 9vh;
 }
 .graph-wrapper {
     margin-top: 95px;
+    background-color: white;
+    margin-right: 1vw !important;
+    margin-left: 1vw !important;
+    border-radius: 3px !important; 
 }
 .logout-button {
     margin-right: 25px !important;
@@ -35,9 +41,17 @@
     display: flex;
     flex-direction: column;
     height: auto;
-    margin-top: 88px;
+    /* margin-top: 88px; */
     padding-left: 2vw !important;
     padding-right: 2vw !important;
+    background-color: white;
+    padding-top: 12vh;
+    margin-right: 1vw !important;
+    margin-left: 1vw !important;
+    border-radius: 3px !important;
+    padding-bottom: 3vh
+
+
 }
 .team-item {
     display: grid;
@@ -55,6 +69,13 @@
     margin-top: 88px;
     padding-left: 2vw !important;
     padding-right: 2vw !important;
+    background-color: white;
+    padding-top: 5vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    padding-bottom: 3vh;
+    border-radius: 3px;
+
 }
 .suggestion-item {
     display: grid;
@@ -79,7 +100,20 @@
     height: 37px;
     width: 115px;
 }
+.like-button1 {
+    grid-column: 1 / 2;
+    height: 37px;
+    width: 115px;
+}
 .commit-button {
+    grid-column: 1 / 2;
+    height: 37px;
+    width: 151px;
+    margin-bottom: 5px;
+    margin-left: 10px !important;
+    vertical-align: baseline!important;
+}
+.commit-button1 {
     grid-column: 1 / 2;
     height: 37px;
     width: 151px;
@@ -151,12 +185,17 @@
     justify-self: end;
 }
 .dash-header2 {
-    margin-top: 2vh !important;
-    margin-right: 10.4px !important;
+    width: 100.5vw;
+    position: fixed;
+    background-color: white;
+    height: 50px;
+    z-index: 1000;
 }
 .header-logo1 {
     justify-self: center !important;
-    grid-column: 2 / 3;
+    margin-left: 1vw !important;
+    height: 75% !important;
+    width: 12% !important;
 }
 .header-pusher {
     margin-bottom: 5vh !important;
@@ -164,3 +203,21 @@
 .avatar-image {
     padding-left: 2vw !important;
 }
+.name-span {
+    font-size: 15px;
+}
+.drop-item {
+    font-size: 5px;
+    display: flex;
+    text-decoration: none;
+}
+.upper-right {
+    margin-right: 1vw;
+    display: inline;
+}
+.myTooltipClass {
+    font-family: myriad-pro, sans-serif;
+}
+.myHighlightClass {
+    font-family: myriad-pro, sans-serif;
+} 

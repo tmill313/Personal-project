@@ -107,6 +107,7 @@ app.put('/commitSuggestion/:id/:suggestion_id', ctrl.commitSuggestion)
 app.get('/getRole', ctrl.getRole)
 app.put('/setUser/:teamId/:position/:access', ctrl.setUser)
 app.put('/completion/:id/:assigned_id/:votes/:completed/:completed_votes', ctrl.completion)
+app.put('/tutorial', ctrl.tutorial)
 
 
 

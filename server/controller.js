@@ -92,6 +92,11 @@ module.exports = {
         const{params} = req;
         db.setUser([req.user.user_id, params.teamId, params.position, params.access]).then(() => res.status(200).send())
     },
+tutorial: (req, res) => {
+    const db = req.app.get('db');
+    console.log(req.user.user_id)
+    db.tutorial([req.user.user_id]).then((user) => res.status(200).send(user))
+},
 
 
 
